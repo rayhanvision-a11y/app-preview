@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="50%" stop-color="#0B0F19"/>
+      <stop offset="100%" stop-color="#070A10"/>
+    </linearGradient>
+
+    <!-- Golden Sun Gradient -->
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Accent Red/Purple Glow -->
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E50914" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#8B5CF6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0B0F19" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Border Glow Gradient -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#8B5CF6" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#E50914" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Glow Layer -->
+  <circle cx="256" cy="256" r="220" fill="url(#glowGrad)"/>
+
+  <!-- Border Frame -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="none" stroke="url(#borderGrad)" stroke-width="4"/>
+
+  <!-- Sun Rays / Ring -->
+  <g transform="translate(256, 230)" filter="url(#glow)">
+    <!-- Rotating decorative sun pips -->
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#F59E0B" stroke-width="3" stroke-dasharray="12 16" opacity="0.45"/>
+    <circle cx="0" cy="0" r="82" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="8 12" opacity="0.35"/>
+  </g>
+
+  <!-- Play Mark / Sun Burst Triangle -->
+  <g transform="translate(256, 230)" filter="url(#shadow)">
+    <!-- Golden Core Disc -->
+    <circle cx="0" cy="0" r="64" fill="url(#sunGrad)"/>
+    <!-- Sleek Play Icon Triangle (Netflix Red / White) -->
+    <polygon points="-14,-28 28,0 -14,28" fill="#0B0F19"/>
+    <polygon points="-12,-24 22,0 -12,24" fill="#FFFFFF"/>
+  </g>
+
+  <!-- SUNPLEX Brand Text -->
+  <text x="256" y="380" text-anchor="middle" font-family="'Outfit', 'Segoe UI', system-ui, sans-serif" font-size="44" font-weight="900" letter-spacing="4" fill="#FFFFFF">
+    SUN<tspan fill="#F59E0B">PLEX</tspan>
+  </text>
+  <text x="256" y="415" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="6" fill="#9CA3AF" opacity="0.8">
+    IPTV STREAMING
+  </text>
+</svg>

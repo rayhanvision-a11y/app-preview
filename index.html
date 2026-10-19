@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SunPlex IPTV - Premium Streaming Experience</title>
+  <meta name="description" content="SunPlex IPTV Application for Live TV, Movies, Series, EPG, and Multi-screen Streaming.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B0F19">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SunPlex IPTV">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css?v=3.5">
+  <!-- Remix Icons for Modern TV & Mobile UI Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- HLS.js Library for m3u8 Video Streaming -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+
+  <!-- Screen 1: Splash Screen Intro -->
+  <div id="splashScreen" class="splash-screen" onclick="skipSplash()">
+    <div class="splash-content">
+      <img src="https://sunplex.net/wp-content/themes/spcore-v2/assets/img/brand/spcore-logo-white.svg" alt="SunPlex Logo" class="splash-logo">
+      <div class="splash-loader"></div>
+    </div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- Top Header Navigation (Netflix & IPTV Style) -->
+    <header class="top-header">
+      <div class="header-left">
+        <button class="header-back-btn" id="headerBackBtn" onclick="goBack()" style="display:none;" title="Back" aria-label="Back">
+          <i class="ri-arrow-left-line"></i>
+        </button>
+        <div class="brand-section" onclick="switchView('dashboardView')">
+          <img src="https://sunplex.net/wp-content/themes/spcore-v2/assets/img/brand/spcore-logo-white.svg" alt="SunPlex Logo" class="header-logo">
+        </div>
+        
+        <!-- Category Dropdown (hidden; moved to header-right icons) -->
+        <div class="nav-dropdown-group" id="headerDropdowns" style="display:none;">
+          <span id="selectedCategoryLabel" hidden>All Categories</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="header-icon-btn" id="categoriesBtn" title="All Categories" aria-label="All categories" onclick="openCategoryModal()" style="display: none;">
+          <i class="ri-menu-line"></i>
+        </button>
+        <button class="header-icon-btn" id="searchBtn" title="Search Movies & Channels" aria-label="Search" onclick="openSearchView()">
+          <i class="ri-search-line"></i>
+        </button>
+        <button class="header-icon-btn notification-header-btn" id="notificationBtn" title="Notifications" aria-label="Notifications" onclick="toggleNotificationDrawer()">
+          <i class="ri-notification-3-line"></i>
+          <span class="notification-badge" id="notificationBadge">3</span>
+        </button>
+        <button class="header-icon-btn" id="castBtn" title="Cast Screen" aria-label="Cast to TV" onclick="showToast('Cast to Smart TV / Chromecast coming soon')" style="display: none;">
+          <i class="ri-cast-line"></i>
+        </button>
+        <div class="user-avatar" id="accountPillBtn" title="Account Settings" role="button" tabindex="0" aria-label="Open account" onclick="openAccountDrawer()">
+          <span class="avatar-emoji" id="headerAvatarEmoji">🎬</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search Bar Overlay (Hidden by Default) -->
+    <div id="searchOverlayBar" class="search-overlay-bar">
+      <div class="search-input-wrapper">
+        <i class="ri-search-line search-icon"></i>
+        <input type="text" id="searchInput" placeholder="Search movies, live TV, series..." onkeyup="handleSearchInput(event)">
+        <button class="clear-search-btn" onclick="toggleSearchInput()"><i class="ri-close-line"></i></button>
+      </div>
+    </div>
+
+    <!-- Main View Routing Area -->
+    <main class="main-view-area">
+
+      <!-- Login View (shown first-visit if no session) -->
+      <section id="loginView" class="sub-view">
+        <div class="login-page">
+          <div class="login-card">
+            <div class="login-logo">
+              <img src="https://sunplex.net/wp-content/themes/spcore-v2/assets/img/brand/spcore-logo-white.svg" alt="SunPlex" />
+            </div>
+            <h1 class="login-title">Welcome back</h1>
+            <p class="login-sub">Sign in to continue — demo credentials are pre-filled.</p>
+
+            <form onsubmit="handleDemoLogin(event)" class="login-form">
+              <div class="login-field">
+                <label for="loginUser">Username</label>
+                <input type="text" id="loginUser" value="demo" autocomplete="username">
+              </div>
+              <div class="login-field">
+                <label for="loginPass">Password</label>
+                <input type="password" id="loginPass" value="demo1234" autocomplete="current-password">
+              </div>
+              <div class="login-row">
+                <label class="login-remember"><input type="checkbox" id="loginRemember" checked> Remember me</label>
+                <span class="login-forgot">Forgot password?</span>
+              </div>
+              <button type="submit" class="login-btn">
+                <i class="ri-login-circle-line"></i> Sign in
+              </button>
+            </form>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- View 1 / Screen 2: Home Page (Hero + Continue Watching + Top 10 Carousels) -->
+      <section id="dashboardView" class="sub-view active">
+        
+        <!-- Hero Featured Banner Slider (Dynamic 5-Movie Slider) -->
+        <div class="hero-banner" id="heroBanner">
+          <div class="hero-ambient-glow" id="heroAmbientGlow"></div>
+          <div class="hero-backdrop" id="heroBackdrop" style="background-image: url('https://image.tmdb.org/t/p/original/kVd3a9YeLGkoeR50jGEXM6EqseS.jpg');"></div>
+          <div class="hero-gradient-overlay"></div>
+          
+          <!-- Slider Navigation Arrows -->
+          <button class="hero-slider-arrow prev" onclick="prevHeroSlide()" title="Previous Movie"><i class="ri-arrow-left-s-line"></i></button>
+          <button class="hero-slider-arrow next" onclick="nextHeroSlide()" title="Next Movie"><i class="ri-arrow-right-s-line"></i></button>
+
+          <div class="hero-content">
+            <div class="movie-header-badges" style="justify-content: center;">
+              <span class="badge-tag-type"><i class="ri-film-fill"></i> MOVIE</span>
+              <span class="badge-tag-print" id="heroPrintBadge">1080p Dual Audio</span>
+            </div>
+            <h1 class="hero-movie-title movie-banner-title" id="heroTitle">SPIDER-MAN</h1>
+            
+            <div class="movie-meta-details" style="justify-content: center; margin-bottom: 6px;">
+              <span class="meta-year" id="heroYear">2026</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-categories" id="heroTags">Adventure / English Movies / Action</span>
+            </div>
+
+            <div class="movie-starring-details" style="text-align: center; margin-bottom: 14px;">
+              <strong class="starring-title">Starring:</strong>
+              <span class="starring-names" id="heroStarring">Matt Damon, Tom Holland, Anne Hathaway</span>
+            </div>
+
+            <!-- Hero Ratings Row Strip (IMDb, TMDB, Rotten Tomatoes Critics, Popcorn, SunPlex) -->
+            <div class="movie-ratings-strip" id="heroRatingsStrip" style="justify-content: center;">
+              <div class="rating-badge-item" title="IMDb Rating">
+                <span class="rating-chip imdb-chip">IMDb</span>
+                <span class="rating-score"><span id="heroImdbScore">7.5</span><small class="rating-max">/10</small></span>
+              </div>
+              <div class="rating-badge-item" title="TMDB Rating">
+                <span class="rating-chip tmdb-chip">TMDB</span>
+                <span class="rating-score"><span id="heroTmdbScore">7.5</span><small class="rating-max">/10</small></span>
+              </div>
+              <div class="rating-badge-item" title="Rotten Tomatoes Tomatometer">
+                <span class="rating-chip rt-chip">🍅 RT</span>
+                <span class="rating-score"><span id="heroRtCriticScore">93</span><small class="rating-max">%</small></span>
+              </div>
+              <div class="rating-badge-item" title="Rotten Tomatoes Audience Score">
+                <span class="rating-chip popcorn-chip">🍿 Popcorn</span>
+                <span class="rating-score"><span id="heroRtAudienceScore">97</span><small class="rating-max">%</small></span>
+              </div>
+              <div class="rating-badge-item" title="SunPlex Official Rating">
+                <span class="rating-chip sunplex-chip">SunPlex</span>
+                <span class="rating-score"><span id="heroSunplexScore">10.0</span><small class="rating-max">/10</small></span>
+              </div>
+            </div>
+
+            <div class="hero-action-buttons">
+              <button class="hero-btn secondary" id="heroMyListBtn" onclick="toggleMyListHeroCurrent()">
+                <i class="ri-add-line" id="heroMyListIcon"></i>
+                <span id="heroMyListText">My List</span>
+              </button>
+              
+              <button class="hero-btn primary" onclick="playCurrentHeroMovie()">
+                <i class="ri-play-fill"></i>
+                <span>Play</span>
+              </button>
+
+              <button class="hero-btn secondary" onclick="playCurrentHeroTrailer()">
+                <i class="ri-film-line"></i>
+                <span>Trailer</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slider Pagination Dots -->
+          <div class="hero-slider-dots" id="heroSliderDots"></div>
+        </div>
+
+
+        <!-- Section 1: Latest Features -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Latest Features</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Latest Features')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="latestFeaturesCarousel"></div>
+        </div>
+
+        <!-- Section 2: Global Trending -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Global Trending</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Global Trending')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="globalTrendingCarousel"></div>
+        </div>
+
+        <!-- Section 3: Hollywood Movies -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Hollywood Movies</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Hollywood')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="hollywoodCarousel"></div>
+        </div>
+
+        <!-- Section 4: Bollywood Movies -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Bollywood Movies</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Bollywood')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="bollywoodCarousel"></div>
+        </div>
+
+        <!-- Section 5: Foreign Movies -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Foreign Movies</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Foreign Movies')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="foreignMoviesCarousel"></div>
+        </div>
+
+        <!-- Section 6: Animation Movies -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Animation Movies</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Animation')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="animationMoviesCarousel"></div>
+        </div>
+
+        <!-- Section 7: South Indian Movies -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">South Indian Movies</h2>
+            <span class="see-all-link" onclick="openCategoryListing('South Indian')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="southIndianCarousel"></div>
+        </div>
+
+        <!-- Section 8: Bangla Movies -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Bangla Movies</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Bangla Movies')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="banglaMoviesCarousel"></div>
+        </div>
+
+        <!-- Section 9: TV Shows -->
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">TV Shows</h2>
+            <span class="see-all-link" onclick="openCategoryListing('TV Shows')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="tvShowsCarousel"></div>
+        </div>
+
+      </section>
+
+      <!-- View 2 / Screen 3: Single Movie / Series Detail View -->
+      <section id="singleMovieView" class="sub-view">
+        <div class="movie-detail-container" id="movieDetailContainer">
+          <!-- Video Preview Area with Embedded HTML5 Player -->
+          <div class="detail-preview-box" id="detailPreviewBox">
+            <video id="detailInlineVideo" class="embedded-video-player detail-inline-video" playsinline webkit-playsinline controls style="display: none;"></video>
+            <img src="https://image.tmdb.org/t/p/original/4XM82sfmj8FGZevWGDHDdYowoer.jpg" alt="Video Preview" class="preview-backdrop" id="detailBackdrop">
+            <div class="preview-overlay" id="detailPreviewOverlay">
+              <button class="preview-play-btn" onclick="triggerInlineDetailPlay()"><i class="ri-play-fill"></i></button>
+              <span class="preview-badge">Preview</span>
+            </div>
+            <button class="detail-video-close-btn" id="detailVideoCloseBtn" onclick="stopInlineDetailPlay()" style="display: none;" title="Close Video">
+              <i class="ri-close-line"></i>
+            </button>
+          </div>
+
+          <!-- Movie Info Block -->
+          <div class="detail-info-block">
+            <!-- Header Badges (Movie + Print Type) -->
+            <div class="movie-header-badges">
+              <span class="badge-tag-type" id="detailTypeBadge"><i class="ri-film-fill"></i> MOVIE</span>
+              <span class="badge-tag-print" id="detailPrintBadge">1080p Dual Audio</span>
+            </div>
+
+            <!-- Movie Title -->
+            <h1 class="detail-title movie-banner-title" id="detailTitle">The Odyssey</h1>
+
+            <!-- Meta Details: Year · Genre -->
+            <div class="movie-meta-details" id="detailMetaDetails">
+              <span class="meta-year" id="detailYear">2026</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-categories" id="detailGenre">Adventure / English Movies / Action</span>
+            </div>
+
+            <!-- Starring Line -->
+            <div class="movie-starring-details" id="detailStarringLine">
+              <strong class="starring-title">Starring:</strong>
+              <span class="starring-names" id="detailCastInline">Matt Damon, Tom Holland, Anne Hathaway</span>
+            </div>
+
+            <!-- 5 Rating Badges Strip (IMDb, TMDB, Rotten Tomatoes Critics, Popcorn, SunPlex) -->
+            <div class="movie-ratings-strip" id="detailRatingsStrip">
+              <!-- IMDb -->
+              <div class="rating-badge-item" title="IMDb Rating">
+                <span class="rating-chip imdb-chip">IMDb</span>
+                <span class="rating-score"><span id="detailImdbScore">7.5</span><small class="rating-max">/10</small></span>
+              </div>
+
+              <!-- TMDB -->
+              <div class="rating-badge-item" title="The Movie Database Rating">
+                <span class="rating-chip tmdb-chip">TMDB</span>
+                <span class="rating-score"><span id="detailTmdbScore">7.5</span><small class="rating-max">/10</small></span>
+              </div>
+
+              <!-- Rotten Tomatoes Critic -->
+              <div class="rating-badge-item" title="Rotten Tomatoes Tomatometer">
+                <span class="rating-chip rt-chip">🍅 RT</span>
+                <span class="rating-score"><span id="detailRtCriticScore">93</span><small class="rating-max">%</small></span>
+              </div>
+
+              <!-- Rotten Tomatoes Audience -->
+              <div class="rating-badge-item" title="Rotten Tomatoes Audience Score">
+                <span class="rating-chip popcorn-chip">🍿 Popcorn</span>
+                <span class="rating-score"><span id="detailRtAudienceScore">97</span><small class="rating-max">%</small></span>
+              </div>
+
+              <!-- SunPlex Rating -->
+              <div class="rating-badge-item" title="SunPlex Official Rating">
+                <span class="rating-chip sunplex-chip">SunPlex</span>
+                <span class="rating-score"><span id="detailSunplexScore">10.0</span><small class="rating-max">/10</small></span>
+              </div>
+            </div>
+
+            <!-- Primary Actions (Play, Download, Trailer, My List) -->
+            <div class="detail-actions">
+              <button class="btn-play-full" onclick="triggerMainStreamPlay()">
+                <i class="ri-play-fill"></i> Play Stream
+              </button>
+              <button class="btn-download-full" onclick="triggerMainStreamDownload()">
+                <i class="ri-download-line"></i> Download
+              </button>
+              <button class="btn-trailer-full" onclick="triggerTrailerPlay()">
+                <i class="ri-film-line"></i> Trailer
+              </button>
+              <button class="btn-mylist-full" id="detailMyListBtn" onclick="toggleMyListActive()">
+                <i class="ri-heart-line" id="detailMyListIcon"></i> <span id="detailMyListText">My List</span>
+              </button>
+            </div>
+
+            <!-- Synopsis & Episode Details -->
+            <div class="detail-synopsis-section">
+              <h3 class="episode-title-heading" id="detailEpisodeTitle">Demon 79</h3>
+              <p class="synopsis-paragraph" id="detailSynopsis">
+                Northern England, 1979. A meek sales assistant discovers she must commit terrible acts to prevent an imminent disaster.
+              </p>
+              
+              <div class="cast-crew-list">
+                <p><b>Starring:</b> <span id="detailCast">Jesse Plemons, Cristin Milioti, Jimmi Simpson, Michaela Coel</span></p>
+                <p><b>Creator:</b> <span id="detailCreator">Charlie Brooker</span></p>
+              </div>
+            </div>
+
+            <!-- TV Series Episodes Section (Only shown for Series/TV Shows) -->
+            <div class="detail-episodes-section" id="detailEpisodesSection" style="display:none;">
+              <div class="episodes-header-row">
+                <div class="episodes-title-wrap">
+                  <h3 class="detail-section-subtitle"><i class="ri-play-list-2-fill" style="color:var(--sunplex-orange);"></i> Episodes</h3>
+                </div>
+                <div class="episodes-season-wrap">
+                  <select class="season-select" id="detailSeasonSelect" onchange="onSeasonChange(this.value)">
+                    <option value="1">Season 1</option>
+                    <option value="2">Season 2</option>
+                    <option value="3">Season 3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="episodes-cards-list" id="detailEpisodesList">
+                <!-- Episodes rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Cast & Characters Section -->
+            <div class="detail-cast-section" id="detailCastSection">
+              <h3 class="detail-section-subtitle"><i class="ri-user-star-line" style="color:var(--accent-gold);"></i> Top Cast & Crew</h3>
+              <div class="cast-avatars-row" id="detailCastAvatars">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+
+            <!-- More Like This Carousel -->
+            <div class="detail-related-section" id="detailRelatedSection">
+              <h3 class="detail-section-subtitle"><i class="ri-sparkling-fill" style="color:var(--netflix-red);"></i> More Like This</h3>
+              <div class="top-10-carousel" id="detailRelatedCarousel">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Actor Profile & Filmography -->
+      <section id="actorDetailView" class="sub-view">
+        <div class="view-header-bar">
+          <button class="back-btn" onclick="goBack()">
+            <i class="ri-arrow-left-line"></i> Back
+          </button>
+          <div class="view-title"><i class="ri-user-star-line" style="color: var(--accent-gold);"></i> Actor Filmography</div>
+          <div></div>
+        </div>
+
+        <div class="actor-profile-container">
+          <div class="actor-hero-card">
+            <div class="actor-avatar-wrapper">
+              <img id="actorHeroAvatar" class="actor-hero-photo" src="" alt="Actor Photo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Actor&background=1F2937&color=FC5305&bold=true';">
+            </div>
+            <div class="actor-hero-details">
+              <div class="actor-badge"><i class="ri-star-fill"></i> Featured Star</div>
+              <h1 id="actorHeroName" class="actor-name">Actor Name</h1>
+              <p id="actorHeroBio" class="actor-bio">Loading actor bio and filmography...</p>
+              <div class="actor-stats-chips">
+                <span class="actor-chip"><i class="ri-film-line" style="color:var(--sunplex-orange);"></i> <span id="actorMoviesCount">0</span> Titles Found</span>
+                <span class="actor-chip" id="actorDepartmentChip"><i class="ri-clapperboard-line"></i> Acting</span>
+                <span class="actor-chip" id="actorBirthdayChip" style="display:none;"><i class="ri-calendar-line"></i> <span id="actorBirthdayText"></span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="category-listing-section">
+            <div class="section-title-wrapper" style="margin-bottom: 16px;">
+              <h2 class="section-heading" style="font-size: 20px;">
+                <i class="ri-movie-2-line" style="color: var(--sunplex-orange);"></i> Movies & TV Shows
+              </h2>
+            </div>
+            <div class="movies-grid" id="actorFilmographyGrid">
+              <!-- Dynamically populated -->
+            </div>
+            <div class="actor-pagination-wrap" id="actorPaginationWrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 3: Live TV Channels & Player -->
+      <section id="liveTvView" class="sub-view">
+        <div class="live-tv-split">
+          <!-- LEFT: Player + Up Next -->
+          <div class="live-tv-left">
+            <div class="live-player-wrapper">
+              <div class="video-screen" id="videoScreen">
+                <video id="liveVideoElement" class="embedded-video-player" playsinline webkit-playsinline></video>
+                <button class="live-center-play-btn" id="liveCenterPlayBtn" onclick="toggleLivePlay()" aria-label="Play Stream">
+                  <i class="ri-play-fill"></i>
+                </button>
+                <div class="live-player-loading-spinner" id="livePlayerSpinner" style="display: none;">
+                  <div class="spinner-ring"></div>
+                </div>
+                <div class="live-now-playing" id="liveNowPlayingBar">
+                  <i class="ri-broadcast-fill"></i>
+                  <span id="liveNowPlayingText">Live: Real Madrid vs FC Barcelona</span>
+                </div>
+              </div>
+
+              <!-- Live Player Controls Bar -->
+              <div class="player-controls">
+                <div class="control-btn-group">
+                  <button class="ctrl-btn" id="livePlayBtn" onclick="toggleLivePlay()" title="Play / Pause"><i class="ri-play-fill" id="playIcon"></i></button>
+                  <button class="ctrl-btn" id="liveMuteBtn" onclick="toggleLiveMute()" title="Mute / Unmute"><i class="ri-volume-up-line" id="muteIcon"></i></button>
+                  <div class="quality-tag">Quality: <span>1080p UHD</span></div>
+                </div>
+                <div class="control-btn-group">
+                  <button class="ctrl-btn" onclick="prevChannel()" title="Previous Channel"><i class="ri-skip-back-line"></i></button>
+                  <button class="ctrl-btn" onclick="nextChannel()" title="Next Channel"><i class="ri-skip-forward-line"></i></button>
+                  <button class="ctrl-btn" onclick="toggleFullscreen()" title="Fullscreen"><i class="ri-fullscreen-line"></i></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: Browser rail -->
+          <div class="live-tv-right">
+            <div class="tv-categories-row" id="tvCategoriesRow">
+              <button class="cat-pill active" onclick="filterCategory('all', this)"><i class="ri-apps-2-line"></i> All Channels</button>
+              <button class="cat-pill" onclick="filterCategory('bangladesh', this)"><i class="ri-flag-fill" style="color:#10b981;"></i> Bangladesh</button>
+              <button class="cat-pill" onclick="filterCategory('india', this)"><i class="ri-flag-fill" style="color:#f59e0b;"></i> India</button>
+              <button class="cat-pill" onclick="filterCategory('usa', this)"><i class="ri-flag-fill" style="color:#3b82f6;"></i> USA & Global</button>
+              <button class="cat-pill" onclick="filterCategory('sports', this)"><i class="ri-football-line"></i> Sports</button>
+              <button class="cat-pill" onclick="filterCategory('news', this)"><i class="ri-newspaper-line"></i> News</button>
+              <button class="cat-pill" onclick="filterCategory('entertainment', this)"><i class="ri-movie-2-line"></i> Entertainment</button>
+              <button class="cat-pill" onclick="filterCategory('movies', this)"><i class="ri-film-line"></i> Cinema</button>
+              <button class="cat-pill" onclick="filterCategory('kids', this)"><i class="ri-bear-smile-line"></i> Kids</button>
+              <button class="cat-pill" onclick="filterCategory('documentary', this)"><i class="ri-earth-line"></i> Discovery</button>
+              <button class="cat-pill" onclick="filterCategory('music', this)"><i class="ri-music-2-line"></i> Music</button>
+            </div>
+
+            <!-- Favorites rail (hidden if empty, scrollable both sides) -->
+            <div class="channel-rail" id="favoritesRail" hidden>
+              <div class="channel-rail-header">
+                <span><i class="ri-star-fill" style="color: var(--accent-gold);"></i> Favorites</span>
+                <div class="rail-scroll-controls">
+                  <button class="rail-nav-arrow" onclick="scrollFavoritesRail(-180)" title="Scroll Left" aria-label="Scroll Left"><i class="ri-arrow-left-s-line"></i></button>
+                  <button class="rail-nav-arrow" onclick="scrollFavoritesRail(180)" title="Scroll Right" aria-label="Scroll Right"><i class="ri-arrow-right-s-line"></i></button>
+                </div>
+              </div>
+              <div class="channel-rail-list" id="favoritesRailList"></div>
+            </div>
+
+
+            <div class="tv-channels-section">
+              <div class="tv-channels-toolbar">
+                <div class="panel-header">Channels</div>
+                <div class="tv-search-box">
+                  <i class="ri-search-line"></i>
+                  <input type="text" id="channelSearchInput" placeholder="Search channels..." oninput="searchChannels(this.value)">
+                </div>
+              </div>
+              <div class="channels-grid" id="channelsListContainer">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 4: Dedicated Movies Page (Hero + Advanced Filters + Category Carousels) -->
+      <section id="moviesView" class="sub-view">
+        <!-- Movies Hero Banner Slider (Movies Only Slider) -->
+        <div class="hero-banner" id="moviesHeroBanner">
+          <div class="hero-backdrop" id="moviesHeroBackdrop" style="background-image: url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1200&q=80');"></div>
+          <div class="hero-gradient-overlay"></div>
+          
+          <!-- Slider Navigation Arrows -->
+          <button class="hero-slider-arrow prev" onclick="prevMoviesHeroSlide()" title="Previous Movie"><i class="ri-arrow-left-s-line"></i></button>
+          <button class="hero-slider-arrow next" onclick="nextMoviesHeroSlide()" title="Next Movie"><i class="ri-arrow-right-s-line"></i></button>
+
+          <div class="hero-content">
+            <div class="hero-title-badge" id="moviesHeroBadge">FEATURED BLOCKBUSTER MOVIE</div>
+            <h1 class="hero-movie-title" id="moviesHeroTitle">OPPENHEIMER</h1>
+            
+            <div class="hero-tags" id="moviesHeroTags">
+              <span>Historical</span> • <span>Drama</span> • <span>Masterpiece</span> • <span>Oscar Winner</span>
+            </div>
+
+            <div class="hero-action-buttons">
+              <button class="hero-btn secondary" onclick="toggleMyListMoviesHeroCurrent()">
+                <i class="ri-add-line"></i>
+                <span>My List</span>
+              </button>
+              
+              <button class="hero-btn primary" onclick="playCurrentMoviesHeroMovie()">
+                <i class="ri-play-fill"></i>
+                <span>Play</span>
+              </button>
+
+              <button class="hero-btn secondary" onclick="playCurrentMoviesHeroTrailer()">
+                <i class="ri-film-line"></i>
+                <span>Trailer</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slider Pagination Dots -->
+          <div class="hero-slider-dots" id="moviesHeroSliderDots"></div>
+        </div>
+
+        <!-- Feature 5: Advanced Filter & Sort Bar -->
+        <div class="content-section">
+          <div class="advanced-filter-bar">
+            <div class="filter-group">
+              <label><i class="ri-filter-3-line"></i> Year:</label>
+              <select id="moviesYearFilter" onchange="applyAdvancedFilters('movies')">
+                <option value="ALL">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="ri-star-line"></i> Rating:</label>
+              <select id="moviesRatingFilter" onchange="applyAdvancedFilters('movies')">
+                <option value="ALL">All Ratings</option>
+                <option value="18+">18+ Adult</option>
+                <option value="16+">16+</option>
+                <option value="13+">13+</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="ri-global-line"></i> Category:</label>
+              <select id="moviesCategoryFilter" onchange="applyAdvancedFilters('movies')">
+                <option value="ALL">All Categories</option>
+                <option value="Bollywood">Bollywood</option>
+                <option value="Hollywood">Hollywood</option>
+                <option value="Action">Action</option>
+                <option value="Horror">Horror</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Trending Movies on SunPlex</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Trending Movies on SunPlex')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="moviesTrendingCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Bollywood Blockbusters & Hits</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Bollywood')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="moviesBollywoodCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Hollywood Blockbusters</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Hollywood')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="moviesHollywoodCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Action & Explosive Thrillers</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Action')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="moviesActionCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Horror & Chilling Stories</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Horror')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="moviesHorrorCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">All VOD Movies Catalog</h2>
+          </div>
+          <div class="movies-grid-container" id="moviesGrid"></div>
+        </div>
+      </section>
+
+      <!-- View 5: Dedicated Series Page (Hero + Advanced Filters + Category Carousels) -->
+      <section id="seriesView" class="sub-view">
+        <!-- Series Hero Banner Slider (Series Only Slider) -->
+        <div class="hero-banner" id="seriesHeroBanner">
+          <div class="hero-backdrop" id="seriesHeroBackdrop" style="background-image: url('https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200&q=80');"></div>
+          <div class="hero-gradient-overlay"></div>
+          
+          <!-- Slider Navigation Arrows -->
+          <button class="hero-slider-arrow prev" onclick="prevSeriesHeroSlide()" title="Previous Series"><i class="ri-arrow-left-s-line"></i></button>
+          <button class="hero-slider-arrow next" onclick="nextSeriesHeroSlide()" title="Next Series"><i class="ri-arrow-right-s-line"></i></button>
+
+          <div class="hero-content">
+            <div class="hero-title-badge" id="seriesHeroBadge">NETFLIX ORIGINAL SERIES</div>
+            <h1 class="hero-movie-title" id="seriesHeroTitle">BLACK MIRROR</h1>
+            
+            <div class="hero-tags" id="seriesHeroTags">
+              <span>Mind-Bending</span> • <span>Dark</span> • <span>Sci-Fi Thriller</span> • <span>6 Seasons</span>
+            </div>
+
+            <div class="hero-action-buttons">
+              <button class="hero-btn secondary" onclick="toggleMyListSeriesHeroCurrent()">
+                <i class="ri-add-line"></i>
+                <span>My List</span>
+              </button>
+              
+              <button class="hero-btn primary" onclick="playCurrentSeriesHeroMovie()">
+                <i class="ri-play-fill"></i>
+                <span>Play</span>
+              </button>
+
+              <button class="hero-btn secondary" onclick="playCurrentSeriesHeroTrailer()">
+                <i class="ri-film-line"></i>
+                <span>Trailer</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slider Pagination Dots -->
+          <div class="hero-slider-dots" id="seriesHeroSliderDots"></div>
+        </div>
+
+        <!-- Advanced Series Filter Bar -->
+        <div class="content-section">
+          <div class="advanced-filter-bar">
+            <div class="filter-group">
+              <label><i class="ri-filter-3-line"></i> Genre:</label>
+              <select id="seriesGenreFilter" onchange="applyAdvancedFilters('series')">
+                <option value="ALL">All Genres</option>
+                <option value="Drama">Drama & Crime</option>
+                <option value="Sci-Fi">Sci-Fi & Thriller</option>
+                <option value="Anime">Anime</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Top 10 Web Series Today</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Top 10 Web Series Today')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="seriesTrendingCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Crime & Drama Series</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Crime & Drama Series')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="seriesDramaCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Sci-Fi & Action Series</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Sci-Fi & Action Series')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="seriesSciFiCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Anime Series & Shows</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Anime Series & Shows')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="seriesAnimeCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">Thriller & Mystery Series</h2>
+            <span class="see-all-link" onclick="openCategoryListing('Thriller & Mystery Series')">See All <i class="ri-arrow-right-s-line"></i></span>
+          </div>
+          <div class="top-10-carousel" id="seriesHorrorCarousel"></div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-header">
+            <h2 class="section-title">All TV Series Catalog</h2>
+          </div>
+          <div class="movies-grid-container" id="seriesGrid"></div>
+        </div>
+      </section>
+
+      <!-- View 6: EPG Program Guide View -->
+      <section id="epgView" class="sub-view">
+        <div class="view-header-bar">
+          <button class="back-btn" onclick="switchView('dashboardView')">
+            <i class="ri-arrow-left-line"></i> Back to Home
+          </button>
+          <div class="view-title">📅 EPG Program Schedule</div>
+          <div></div>
+        </div>
+
+        <div style="background: var(--bg-dark-800); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 24px;">
+          <div id="epgContainer" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- EPG Channels Row rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- View 7: Downloads View (Offline Storage & Downloaded Media) -->
+      <section id="downloadsView" class="sub-view">
+        <div class="view-header-bar">
+          <button class="back-btn" onclick="switchView('dashboardView')">
+            <i class="ri-arrow-left-line"></i> Back to Home
+          </button>
+          <div class="view-title">📥 Smart Downloads & Offline Media</div>
+          <div></div>
+        </div>
+
+        <div class="downloads-container">
+          <!-- Storage Meter Box -->
+          <div class="storage-info-card">
+            <div class="storage-text-row">
+              <span><i class="ri-smartphone-line" style="color: var(--accent-cyan);"></i> Internal Storage</span>
+              <span class="storage-used-label"><b>14.2 GB</b> used of 64 GB</span>
+            </div>
+            <div class="storage-progress-bar">
+              <div class="storage-progress-fill" style="width: 22%;"></div>
+            </div>
+            <div class="storage-subtext">SunPlex Offline Media: <span id="downloadedCountLabel">4 Movies / Shows</span> Downloaded</div>
+          </div>
+
+          <!-- Downloaded Items List -->
+          <div class="downloads-list" id="downloadsListContainer">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Category Listing View (reused for every "See All" link) -->
+      <section id="categoryListingView" class="sub-view">
+        <div class="view-header-bar">
+          <button class="back-btn" onclick="goBack()">
+            <i class="ri-arrow-left-line"></i> Back
+          </button>
+          <div class="view-title" id="categoryListingTitle">Category</div>
+          <div></div>
+        </div>
+
+        <div class="category-listing-page">
+          <div class="category-listing-meta" id="categoryListingMeta"></div>
+          <div class="category-listing-grid" id="categoryListingGrid"></div>
+        </div>
+      </section>
+
+      <!-- Actor / Person Filmography View (John Cena / Any Actor Page) -->
+      <section id="actorDetailView" class="sub-view">
+        <div class="view-header-bar">
+          <button class="back-btn" onclick="goBack()">
+            <i class="ri-arrow-left-line"></i> Back
+          </button>
+          <div class="view-title" id="actorHeaderTitle">Actor Filmography</div>
+          <div></div>
+        </div>
+
+        <div class="actor-profile-container">
+          <!-- Actor Hero Profile Card -->
+          <div class="actor-hero-card">
+            <div class="actor-avatar-wrapper">
+              <img id="actorHeroAvatar" src="" alt="Actor Photo" class="actor-hero-photo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Actor&background=1F2937&color=FC5305&bold=true';">
+            </div>
+            <div class="actor-hero-details">
+              <div class="actor-badge"><i class="ri-user-star-fill"></i> FEATURED ARTIST</div>
+              <h1 class="actor-name" id="actorHeroName">Actor Name</h1>
+              <p class="actor-bio" id="actorHeroBio">Starring in acclaimed blockbuster movies & series.</p>
+              <div class="actor-stats-chips">
+                <span class="actor-chip" id="actorMoviesCount"><i class="ri-film-line"></i> 0 Titles</span>
+                <span class="actor-chip"><i class="ri-shield-star-line" style="color:var(--accent-gold);"></i> Verified Filmography</span>
+                <span class="actor-chip"><i class="ri-hd-line" style="color:var(--sunplex-orange);"></i> 4K Ultra HD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filmography Catalog -->
+          <div class="actor-filmography-section">
+            <div class="section-header" style="margin-bottom: 16px;">
+              <h2 class="section-title"><i class="ri-movie-2-line" style="color: var(--netflix-red);"></i> All Movies & Series</h2>
+            </div>
+            <div class="category-listing-grid" id="actorFilmographyGrid">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advanced Search View -->
+      <section id="searchView" class="sub-view">
+        <div class="search-page search-page-minimal">
+          <!-- Hero input with inline filter button + suggestions -->
+          <div class="search-hero">
+            <div class="search-hero-input">
+              <i class="ri-search-line"></i>
+              <input id="searchPageInput" type="text" placeholder="Search for movies, series, live TV…" autocomplete="off" oninput="onSearchInput()" onkeydown="onSearchKey(event)">
+              <button class="clear-search-btn" aria-label="Clear" onclick="clearSearchInput()"><i class="ri-close-line"></i></button>
+            </div>
+            <!-- Inline suggestions dropdown (populated as user types) -->
+            <div class="search-suggestions" id="searchSuggestions" hidden></div>
+
+            <!-- Advanced toggle (visible, labeled) -->
+            <div class="advanced-toggle-wrap">
+              <button class="advanced-toggle" id="filterPanelToggle" onclick="toggleFilterPanel()">
+                <i class="ri-equalizer-line"></i>
+                <span>Advanced</span>
+                <i class="ri-arrow-down-s-line" id="filterPanelCaret"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hidden scope row (kept in DOM for backward-compat JS, visually removed in minimal mode) -->
+          <div class="search-chip-row" id="searchScopeRow" hidden>
+            <button class="search-chip active" data-scope="all" onclick="setSearchScope('all', this)"><i class="ri-apps-line"></i> All</button>
+            <button class="search-chip" data-scope="movie" onclick="setSearchScope('movie', this)"><i class="ri-film-line"></i> Movies</button>
+            <button class="search-chip" data-scope="series" onclick="setSearchScope('series', this)"><i class="ri-clapperboard-line"></i> Series</button>
+            <button class="search-chip" data-scope="live" onclick="setSearchScope('live', this)"><i class="ri-tv-2-line"></i> Live TV</button>
+          </div>
+
+
+          <!-- Filter panel -->
+          <div class="filter-panel" id="searchFilterPanel" hidden>
+            <div class="filter-group">
+              <label>Genre</label>
+              <div class="search-chip-row" id="genreChipRow">
+                <button class="search-chip active" data-genre="any" onclick="setGenre('any', this)">Any</button>
+                <button class="search-chip" data-genre="Action" onclick="setGenre('Action', this)">Action</button>
+                <button class="search-chip" data-genre="Drama" onclick="setGenre('Drama', this)">Drama</button>
+                <button class="search-chip" data-genre="Horror" onclick="setGenre('Horror', this)">Horror</button>
+                <button class="search-chip" data-genre="Sci-Fi" onclick="setGenre('Sci-Fi', this)">Sci-Fi</button>
+                <button class="search-chip" data-genre="Comedy" onclick="setGenre('Comedy', this)">Comedy</button>
+                <button class="search-chip" data-genre="Thriller" onclick="setGenre('Thriller', this)">Thriller</button>
+                <button class="search-chip" data-genre="Anime" onclick="setGenre('Anime', this)">Anime</button>
+                <button class="search-chip" data-genre="Romance" onclick="setGenre('Romance', this)">Romance</button>
+                <button class="search-chip" data-genre="Documentary" onclick="setGenre('Documentary', this)">Documentary</button>
+              </div>
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-group">
+                <label>Year from</label>
+                <input type="number" id="filterYearMin" min="1950" max="2030" value="2000" oninput="runSearch()">
+              </div>
+              <div class="filter-group">
+                <label>Year to</label>
+                <input type="number" id="filterYearMax" min="1950" max="2030" value="2030" oninput="runSearch()">
+              </div>
+              <div class="filter-group">
+                <label>Min rating: <span id="minRatingLabel">0.0</span></label>
+                <input type="range" id="filterMinRating" min="0" max="10" step="0.5" value="0" oninput="document.getElementById('minRatingLabel').textContent=this.value; runSearch()">
+              </div>
+              <div class="filter-group">
+                <label>Sort by</label>
+                <select id="filterSort" onchange="runSearch()">
+                  <option value="relevance">Relevance</option>
+                  <option value="newest">Newest</option>
+                  <option value="rating">Rating</option>
+                  <option value="az">A → Z</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-actions">
+              <button class="btn-outline" onclick="clearAllSearchFilters()">Clear all</button>
+            </div>
+          </div>
+
+          <!-- Empty state: just Recent chips (hidden if none) -->
+          <div id="searchEmptyState">
+            <div class="search-block" id="recentSearchesBlock" hidden>
+              <div class="search-block-head"><i class="ri-time-line"></i> Recent</div>
+              <div class="search-chip-row" id="recentSearchesRow"></div>
+            </div>
+          </div>
+
+          <!-- Results grid -->
+          <div class="search-results-wrap" id="searchResultsWrap" hidden>
+            <div class="search-results-head">
+              <span id="searchResultsCount">0 results</span>
+            </div>
+            <div class="search-results-grid" id="searchResultsGrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Full Account View (replaces old modal) -->
+      <section id="accountView" class="sub-view">
+        <div class="view-header-bar">
+          <button class="back-btn" onclick="switchView('dashboardView')">
+            <i class="ri-arrow-left-line"></i> Back
+          </button>
+          <div class="view-title"><i class="ri-user-settings-line" style="color: var(--accent-gold);"></i> Account</div>
+          <div></div>
+        </div>
+
+        <div class="account-page">
+          <!-- Profile Card -->
+          <section class="account-section">
+            <div class="profile-card">
+              <div class="profile-avatar" id="profileAvatarBig" onclick="pickAvatarPreset()">🎬</div>
+              <div class="profile-main">
+                <div class="profile-name" id="profileName">SunPlex User</div>
+                <div class="profile-email" id="profileEmail">user@sunplex.tv</div>
+                <div class="profile-meta">
+                  <span class="profile-dim">Member since <span id="profileMemberSince">2024</span></span>
+                </div>
+              </div>
+              <button class="btn-outline" onclick="openEditProfile()"><i class="ri-edit-line"></i> Edit</button>
+            </div>
+          </section>
+
+          <!-- Who's Watching (profiles) -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-group-line"></i> Who's Watching</h3><button class="btn-text" onclick="addProfile()"><i class="ri-add-line"></i> Add profile</button></div>
+            <div class="profiles-row" id="profilesRow"></div>
+          </section>
+
+     
+
+          <!-- Devices -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-device-line"></i> Devices</h3>
+              <div class="section-head-actions">
+                <span class="stream-counter" id="streamCounter">0 of 4 streams in use</span>
+                <button class="btn-outline" onclick="openTvCodeModal()"><i class="ri-tv-2-line"></i> Link a TV</button>
+                <button class="btn-text btn-danger" onclick="signOutAllDevices()">Sign out all</button>
+              </div>
+            </div>
+            <div class="devices-list" id="devicesList"></div>
+          </section>
+
+          <!-- Playback & Preferences -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-play-circle-line"></i> Playback</h3></div>
+            <div class="settings-list">
+              <div class="setting-row">
+                <div><div class="s-label">Autoplay next episode</div><div class="s-desc">Automatically play the next episode in a series.</div></div>
+                <label class="toggle"><input type="checkbox" id="prefAutoplayNext" onchange="savePrefs()"><span class="slider"></span></label>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Autoplay previews</div><div class="s-desc">Preview videos while you browse.</div></div>
+                <label class="toggle"><input type="checkbox" id="prefAutoplayPreviews" onchange="savePrefs()"><span class="slider"></span></label>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Default video quality</div><div class="s-desc">Higher = sharper, more data used.</div></div>
+                <select id="prefQuality" onchange="savePrefs()">
+                  <option value="auto">Auto</option>
+                  <option value="720p">720p HD</option>
+                  <option value="1080p">1080p Full HD</option>
+                  <option value="4k">4K Ultra HD</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Data saver mode</div><div class="s-desc">Lower bitrate on cellular networks.</div></div>
+                <label class="toggle"><input type="checkbox" id="prefDataSaver" onchange="savePrefs()"><span class="slider"></span></label>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Default audio language</div></div>
+                <select id="prefAudioLang" onchange="savePrefs()">
+                  <option>English</option><option>Hindi</option><option>Bengali</option><option>Spanish</option><option>Arabic</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Default subtitle language</div></div>
+                <select id="prefSubLang" onchange="savePrefs()">
+                  <option>Off</option><option>English</option><option>Bangla</option><option>Hindi</option><option>Spanish</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Subtitle style</div><div class="s-desc">Preview: <span id="subStylePreview" class="sub-preview">Sample caption text</span></div></div>
+                <div class="setting-inline">
+                  <select id="prefSubSize" onchange="savePrefs()">
+                    <option value="s">Small</option><option value="m" selected>Medium</option><option value="l">Large</option>
+                  </select>
+                  <input type="color" id="prefSubColor" value="#ffffff" onchange="savePrefs()">
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Appearance & Language -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-palette-line"></i> Appearance & Language</h3></div>
+            <div class="settings-list">
+              <div class="setting-row">
+                <div><div class="s-label">UI language</div></div>
+                <select id="prefLang" onchange="savePrefs()">
+                  <option>English</option><option>বাংলা</option><option>हिन्दी</option><option>Español</option><option>العربية</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Content region</div></div>
+                <select id="prefRegion" onchange="savePrefs()">
+                  <option>Global</option><option>India</option><option>Bangladesh</option><option>USA</option><option>MENA</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Theme</div></div>
+                <div class="theme-picker">
+                  <button class="theme-chip" data-theme="dark" onclick="setTheme('dark')">Dark</button>
+                  <button class="theme-chip" data-theme="amoled" onclick="setTheme('amoled')">AMOLED</button>
+                  <button class="theme-chip" data-theme="dim" onclick="setTheme('dim')">Dim</button>
+                </div>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">Accent color</div></div>
+                <div class="accent-picker" id="accentPicker">
+                  <button class="accent-dot" data-accent="gold" style="background:#FC5305" onclick="setAccent('gold')"></button>
+                  <button class="accent-dot" data-accent="purple" style="background:#8B5CF6" onclick="setAccent('purple')"></button>
+                  <button class="accent-dot" data-accent="red" style="background:#E50914" onclick="setAccent('red')"></button>
+                  <button class="accent-dot" data-accent="cyan" style="background:#06B6D4" onclick="setAccent('cyan')"></button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Notifications -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-notification-3-line"></i> Notifications</h3></div>
+            <div class="settings-list">
+              <div class="setting-row"><div class="s-label">New releases</div><label class="toggle"><input type="checkbox" id="notifReleases" onchange="savePrefs()" checked><span class="slider"></span></label></div>
+              <div class="setting-row"><div class="s-label">Continue-watching reminders</div><label class="toggle"><input type="checkbox" id="notifReminders" onchange="savePrefs()" checked><span class="slider"></span></label></div>
+              <div class="setting-row"><div class="s-label">Live events</div><label class="toggle"><input type="checkbox" id="notifLive" onchange="savePrefs()" checked><span class="slider"></span></label></div>
+              <div class="setting-row"><div class="s-label">Promotional</div><label class="toggle"><input type="checkbox" id="notifPromo" onchange="savePrefs()"><span class="slider"></span></label></div>
+              <div class="setting-row">
+                <div><div class="s-label">Quiet hours</div><div class="s-desc">Mute non-urgent notifications during this window.</div></div>
+                <div class="setting-inline">
+                  <input type="time" id="quietStart" value="22:00" onchange="savePrefs()">
+                  <span>→</span>
+                  <input type="time" id="quietEnd" value="07:00" onchange="savePrefs()">
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Downloads -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-download-cloud-2-line"></i> Downloads</h3></div>
+            <div class="settings-list">
+              <div class="setting-row">
+                <div><div class="s-label">Download quality</div></div>
+                <select id="prefDownloadQuality" onchange="savePrefs()">
+                  <option value="standard">Standard</option><option value="high">High</option>
+                </select>
+              </div>
+              <div class="setting-row"><div class="s-label">Download over Wi-Fi only</div><label class="toggle"><input type="checkbox" id="prefWifiOnly" onchange="savePrefs()" checked><span class="slider"></span></label></div>
+              <div class="setting-row"><div class="s-label">Auto-delete watched</div><label class="toggle"><input type="checkbox" id="prefAutoDelete" onchange="savePrefs()"><span class="slider"></span></label></div>
+            </div>
+          </section>
+
+          <!-- Security & Privacy -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-shield-keyhole-line"></i> Security & Privacy</h3></div>
+            <div class="settings-list">
+              <div class="setting-row">
+                <div><div class="s-label">Change password</div><div class="s-desc">Last changed <span id="pwdLastChanged">90 days ago</span></div></div>
+                <button class="btn-outline" onclick="openChangePassword()">Change</button>
+              </div>
+              <div class="setting-row">
+                <div><div class="s-label">App PIN</div><div class="s-desc">4-digit lock for this device.</div></div>
+                <button class="btn-outline" onclick="setAppPin()"><span id="appPinLabel">Not set</span></button>
+              </div>
+              <div class="setting-row"><div class="s-label">Biometric unlock (phone)</div><label class="toggle"><input type="checkbox" id="secBiometric" onchange="savePrefs()"><span class="slider"></span></label></div>
+              <div class="setting-row">
+                <div><div class="s-label">Two-factor authentication</div><div class="s-desc">Protect sign-ins with a code.</div></div>
+                <select id="sec2FA" onchange="savePrefs()">
+                  <option value="off">Off</option><option value="sms">SMS</option><option value="auth">Authenticator app</option><option value="email">Email</option>
+                </select>
+              </div>
+              <div class="setting-row"><div class="s-label">New-login alerts</div><label class="toggle"><input type="checkbox" id="secLoginAlerts" onchange="savePrefs()" checked><span class="slider"></span></label></div>
+              <div class="setting-row">
+                <div><div class="s-label">Parental maturity cap</div><div class="s-desc">Hide titles above this rating.</div></div>
+                <select id="parentalCap" onchange="savePrefs()">
+                  <option value="all">All</option><option value="13">13+</option><option value="16">16+</option><option value="18">18+</option>
+                </select>
+              </div>
+              <div class="setting-row"><div class="s-label">Pause watch history</div><label class="toggle"><input type="checkbox" id="pauseHistory" onchange="savePrefs()"><span class="slider"></span></label></div>
+              <div class="setting-row"><div class="s-label">Clear watch history</div><button class="btn-outline btn-danger" onclick="clearWatchHistory()">Clear</button></div>
+              <div class="setting-row">
+                <div><div class="s-label">Login activity</div><div class="s-desc">Last 30 days of sign-ins.</div></div>
+                <button class="btn-outline" onclick="openLoginLog()">View</button>
+              </div>
+              <div class="setting-row"><div class="s-label">Download my data</div><button class="btn-outline" onclick="downloadMyData()">Export</button></div>
+              <div class="setting-row"><div class="s-label">Delete account</div><button class="btn-outline btn-danger" onclick="confirmDeleteAccount()">Delete</button></div>
+            </div>
+          </section>
+
+          <!-- Content & Social -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-heart-line"></i> Content & Social</h3></div>
+            <div class="settings-list">
+              <div class="setting-row"><div class="s-label">My List</div><button class="btn-outline" onclick="openMyListManager()">Manage</button></div>
+              <div class="setting-row"><div class="s-label">Watch history</div><button class="btn-outline" onclick="openWatchHistory()">View</button></div>
+              <div class="setting-row"><div class="s-label">Ratings & reviews</div><button class="btn-outline" onclick="openMyRatings()">View</button></div>
+              <div class="setting-row">
+                <div><div class="s-label">Taste preferences</div><div class="s-desc">Retrain your recommendations.</div></div>
+                <button class="btn-outline" onclick="openTasteQuiz()">Start quiz</button>
+              </div>
+              <div class="setting-row"><div class="s-label">Family invite</div><button class="btn-outline" onclick="openFamilyInvite()">Invite</button></div>
+              <div class="setting-row"><div class="s-label">Referral program</div><button class="btn-outline" onclick="openReferral()">Get code</button></div>
+            </div>
+          </section>
+
+          <!-- Rewards & Extras -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-trophy-line"></i> SunPlex Rewards</h3></div>
+            <div class="rewards-card">
+              <div class="rewards-points"><span id="rewardsPoints">0</span> <small>pts</small></div>
+              <div class="rewards-info">
+                <div>Earn 10 pts per hour watched. Redeem for upgrades and gifts.</div>
+                <div class="rewards-actions">
+                  <button class="btn-outline" onclick="redeemPoints()">Redeem</button>
+                  <button class="btn-outline" onclick="openPromoCode()">Enter promo code</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Help & About -->
+          <section class="account-section">
+            <div class="section-head"><h3><i class="ri-question-line"></i> Help & About</h3></div>
+            <div class="settings-list">
+              <div class="setting-row"><div class="s-label">Help center / FAQ</div><button class="btn-outline" onclick="showToast('Opening help center...')">Open</button></div>
+              <div class="setting-row"><div class="s-label">Contact support</div><button class="btn-outline" onclick="showToast('Live chat coming soon')">Chat</button></div>
+              <div class="setting-row"><div class="s-label">Report a bug</div><button class="btn-outline" onclick="openBugReport()">Report</button></div>
+              <div class="setting-row"><div class="s-label">System status</div><span class="status-ok"><span class="status-dot"></span> All systems operational</span></div>
+              <div class="setting-row"><div class="s-label">App version</div><span class="profile-dim">SunPlex v1.0.0 (prototype)</span></div>
+              <div class="setting-row"><div class="s-label">Terms & Privacy</div><button class="btn-outline" onclick="showToast('Legal docs placeholder')">View</button></div>
+              <div class="setting-row"><div class="s-label">Open-source licenses</div><button class="btn-outline" onclick="showToast('Licenses placeholder')">View</button></div>
+            </div>
+          </section>
+
+          <!-- Sign out -->
+          <section class="account-section">
+            <button class="btn-outline btn-danger btn-block" onclick="signOutCurrent()"><i class="ri-logout-box-r-line"></i> Sign out</button>
+          </section>
+        </div>
+      </section>
+
+    </main>
+
+  <!-- Mobile Bottom Navigation Bar (5-Tab Netflix Style) -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <button class="nav-tab-btn active" id="tabHome" onclick="switchView('dashboardView')">
+      <i class="ri-home-5-fill"></i>
+      <span>Home</span>
+    </button>
+
+    <button class="nav-tab-btn" id="tabMovies" onclick="switchView('moviesView')">
+      <i class="ri-film-line"></i>
+      <span>Movies</span>
+    </button>
+
+    <button class="nav-tab-btn" id="tabSeries" onclick="switchView('seriesView')">
+      <i class="ri-clapperboard-line"></i>
+      <span>Series</span>
+    </button>
+
+    <button class="nav-tab-btn" id="tabLiveTv" onclick="switchView('liveTvView')">
+      <i class="ri-tv-2-line"></i>
+      <span>Live TV</span>
+    </button>
+
+    <button class="nav-tab-btn" id="tabDownloads" onclick="switchView('downloadsView')">
+      <i class="ri-download-2-line"></i>
+      <span>Downloads</span>
+    </button>
+  </nav>
+
+  <!-- Right-slide Categories Drawer -->
+  <div class="side-drawer-scrim" id="categoryScrim" onclick="closeCategoryModal()"></div>
+  <aside class="side-drawer side-drawer-right" id="categoryOverlayModal" aria-label="Categories">
+    <div class="side-drawer-header">
+      <h3><i class="ri-apps-2-line"></i> All Categories</h3>
+      <button class="side-drawer-close" onclick="closeCategoryModal()" aria-label="Close">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="side-drawer-body" id="categoryListContainer">
+      <button class="drawer-item active" onclick="selectCategory('All Categories')"><i class="ri-apps-line"></i><span>Available for Download</span></button>
+      <button class="drawer-item" onclick="selectCategory('Bollywood')"><i class="ri-movie-line"></i><span>Bollywood</span></button>
+      <button class="drawer-item" onclick="selectCategory('Hollywood')"><i class="ri-film-line"></i><span>Hollywood</span></button>
+      <button class="drawer-item" onclick="selectCategory('Action')"><i class="ri-fire-line"></i><span>Action</span></button>
+      <button class="drawer-item" onclick="selectCategory('Anime')"><i class="ri-palette-line"></i><span>Anime</span></button>
+      <button class="drawer-item" onclick="selectCategory('Award-Winning')"><i class="ri-award-line"></i><span>Award-Winning</span></button>
+      <button class="drawer-item" onclick="selectCategory('Children & Family')"><i class="ri-bear-smile-line"></i><span>Children &amp; Family</span></button>
+      <button class="drawer-item" onclick="selectCategory('Comedy Movies')"><i class="ri-emotion-laugh-line"></i><span>Comedy Movies</span></button>
+      <button class="drawer-item" onclick="selectCategory('Documentaries')"><i class="ri-earth-line"></i><span>Documentaries</span></button>
+      <button class="drawer-item" onclick="selectCategory('Dramas')"><i class="ri-mask-line"></i><span>Dramas</span></button>
+      <button class="drawer-item" onclick="selectCategory('Horror')"><i class="ri-ghost-line"></i><span>Horror</span></button>
+      <button class="drawer-item" onclick="selectCategory('Sci-Fi & Fantasy')"><i class="ri-rocket-line"></i><span>Sci-Fi &amp; Fantasy</span></button>
+      <button class="drawer-item" onclick="selectCategory('Thrillers')"><i class="ri-knife-blood-line"></i><span>Thrillers</span></button>
+    </div>
+  </aside>
+
+  <!-- Right-slide Notifications Drawer -->
+  <div class="side-drawer-scrim" id="notificationScrim" onclick="closeNotificationDrawer()"></div>
+  <aside class="side-drawer side-drawer-right notification-drawer" id="notificationDrawer" aria-label="Notifications Drawer">
+    <div class="side-drawer-header">
+      <div class="notification-header-title">
+        <i class="ri-notification-3-fill notif-bell-icon"></i>
+        <h3>Notifications</h3>
+        <span class="notification-count-pill" id="notificationCountPill">3 New</span>
+      </div>
+      <div class="notification-header-actions">
+        <button class="notif-action-icon-btn" onclick="markAllNotificationsAsRead()" title="Mark all as read">
+          <i class="ri-check-double-line"></i>
+        </button>
+        <button class="side-drawer-close" onclick="closeNotificationDrawer()" aria-label="Close">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="notification-drawer-toolbar">
+      <div class="notif-tabs">
+        <button class="notif-filter-tab active" id="notifTabAll" onclick="filterNotifications('all', this)">All</button>
+        <button class="notif-filter-tab" id="notifTabUnread" onclick="filterNotifications('unread', this)">Unread</button>
+      </div>
+      <button class="notif-clear-text-btn" onclick="clearAllNotifications()">Clear all</button>
+    </div>
+
+    <div class="side-drawer-body notification-list" id="notificationListContainer">
+      <!-- Dynamic notification cards rendered here -->
+    </div>
+  </aside>
+
+  <!-- Left-slide Account Drawer (quick-menu) -->
+  <div class="side-drawer-scrim" id="accountScrim" onclick="closeAccountDrawer()"></div>
+  <aside class="side-drawer side-drawer-left" id="accountDrawer" aria-label="Account menu">
+    <div class="side-drawer-profile">
+      <div class="profile-avatar" id="drawerAvatar" onclick="switchView('accountView'); closeAccountDrawer();">🎬</div>
+      <div class="drawer-profile-main">
+        <div class="drawer-profile-name" id="drawerProfileName">SunPlex User</div>
+        <div class="drawer-profile-email" id="drawerProfileEmail">user@sunplex.tv</div>
+      </div>
+      <button class="side-drawer-close" onclick="closeAccountDrawer()" aria-label="Close">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="side-drawer-body">
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-user-settings-line"></i><span>Account settings</span></button>
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-group-line"></i><span>Switch profile</span></button>
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-device-line"></i><span>Devices</span></button>
+      <button class="drawer-item" onclick="openTvCodeModal(); closeAccountDrawer();"><i class="ri-tv-2-line"></i><span>Link a TV</span></button>
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-notification-3-line"></i><span>Notifications</span></button>
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-shield-keyhole-line"></i><span>Security &amp; privacy</span></button>
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-trophy-line"></i><span>SunPlex Rewards</span></button>
+      <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-question-line"></i><span>Help &amp; support</span></button>
+    </div>
+
+    <div class="side-drawer-footer">
+      <button class="btn-outline btn-danger btn-block" onclick="signOutCurrent(); closeAccountDrawer();">
+        <i class="ri-logout-box-r-line"></i> Sign out
+      </button>
+    </div>
+  </aside>
+
+
+  <!-- Feature 2: Trailer Video Player Modal Popup -->
+  <div class="modal-backdrop" id="trailerModal">
+    <div class="modal-card" style="max-width: 800px; padding: 0; overflow: hidden;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: var(--bg-dark-800); border-bottom: 1px solid var(--glass-border);">
+        <span style="font-weight: 700; font-size: 16px;"><i class="ri-film-line" style="color: var(--netflix-red);"></i> Official Trailer Preview</span>
+        <button class="modal-close-btn" style="position:static;" onclick="closeTrailerModal()"><i class="ri-close-line"></i></button>
+      </div>
+      <div style="aspect-ratio: 16/9; width: 100%; background: #000;">
+        <iframe id="trailerIframe" width="100%" height="100%" src="" title="Trailer Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 6: Xtream Codes IPTV Playlist Login Modal -->
+  <div class="modal-backdrop" id="xtreamLoginModal">
+    <div class="modal-card" style="max-width: 440px;">
+      <button class="modal-close-btn" onclick="closeXtreamLoginModal()"><i class="ri-close-line"></i></button>
+      <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px; color: var(--accent-gold);"><i class="ri-key-line"></i> Xtream Codes IPTV Login</h2>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Connect your custom IPTV provider playlist credentials.</p>
+
+      <form onsubmit="handleXtreamLogin(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Server URL / Host Port:</label>
+          <input type="text" id="xtreamHost" placeholder="http://line.sunplextv.com:8080" required style="width:100%; padding:10px 14px; background:var(--bg-dark-700); border:1px solid var(--glass-border); border-radius:6px; color:#FFF;">
+        </div>
+
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Username:</label>
+          <input type="text" id="xtreamUser" placeholder="Enter username" required style="width:100%; padding:10px 14px; background:var(--bg-dark-700); border:1px solid var(--glass-border); border-radius:6px; color:#FFF;">
+        </div>
+
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Password:</label>
+          <input type="password" id="xtreamPass" placeholder="Enter password" required style="width:100%; padding:10px 14px; background:var(--bg-dark-700); border:1px solid var(--glass-border); border-radius:6px; color:#FFF;">
+        </div>
+
+        <button type="submit" class="btn-play-full" style="background: var(--netflix-red); color: #FFF; margin-top: 10px;">
+          <i class="ri-plug-line"></i> Connect Playlist
+        </button>
+      </form>
+
+      <button onclick="openTvCodeModal()" class="tv-code-entry-btn">
+        <i class="ri-smartphone-line"></i> Sign in with a code instead
+      </button>
+    </div>
+  </div>
+
+  <!-- Feature 5c: Sign in with TV Code (Phone-to-TV Pairing) -->
+  <div class="modal-backdrop" id="tvCodeModal">
+    <div class="modal-card" style="max-width: 440px; text-align: center;">
+      <button class="modal-close-btn" onclick="closeTvCodeModal()"><i class="ri-close-line"></i></button>
+
+      <div id="tvCodeStepTv">
+        <div class="tv-code-icon"><i class="ri-tv-2-line"></i></div>
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px; color: var(--accent-gold);">Sign in with your phone</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">On your phone, open <strong>sunplex.tv/link</strong> and enter this code.</p>
+
+        <div class="tv-code-display" id="tvCodeValue">------</div>
+        <div class="tv-code-timer" id="tvCodeTimer">Expires in 5:00</div>
+        <div class="tv-code-status" id="tvCodeStatus">Waiting for phone…</div>
+
+        <button onclick="showPhoneVerifyStep()" class="tv-code-secondary-btn">
+          <i class="ri-keyboard-line"></i> Verify on this device instead
+        </button>
+      </div>
+
+      <div id="tvCodeStepPhone" class="hidden">
+        <div class="tv-code-icon"><i class="ri-smartphone-line"></i></div>
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px; color: var(--accent-gold);">Enter the code shown on your TV</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Type the 6-character code from your TV screen.</p>
+
+        <form onsubmit="submitPhoneCode(event)" style="display: flex; flex-direction: column; gap: 14px;">
+          <input type="text" id="phoneCodeInput" maxlength="6" autocomplete="off" placeholder="ABC123" class="tv-code-input" required>
+          <div class="tv-code-error" id="phoneCodeError"></div>
+          <button type="submit" class="btn-play-full" style="background: var(--netflix-red); color: #FFF;">
+            <i class="ri-check-line"></i> Confirm
+          </button>
+        </form>
+
+        <button onclick="showTvCodeStep()" class="tv-code-secondary-btn">
+          <i class="ri-arrow-left-line"></i> Back to TV code
+        </button>
+      </div>
+
+      <div id="tvCodeStepSuccess" class="hidden">
+        <div class="tv-code-success-check"><i class="ri-checkbox-circle-fill"></i></div>
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--accent-gold);">You're linked!</h2>
+        <p style="font-size: 12px; color: var(--text-muted);">Signing you in…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 8: Parental Control 4-Digit PIN Unlock Modal -->
+  <div class="modal-backdrop" id="parentalPinModal">
+    <div class="modal-card" style="max-width: 360px; text-align: center;">
+      <button class="modal-close-btn" onclick="closeParentalPinModal()"><i class="ri-close-line"></i></button>
+      <div style="font-size: 40px; color: var(--accent-rose); margin-bottom: 8px;"><i class="ri-lock-2-line"></i></div>
+      <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px;">Parental Lock Protected</h2>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Enter 4-Digit PIN to unlock 18+ content (Default: 0000)</p>
+
+      <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 16px;">
+        <input type="password" maxlength="4" id="parentalPinInput" placeholder="0000" style="width: 140px; text-align: center; font-size: 24px; letter-spacing: 12px; padding: 8px; background: var(--bg-dark-700); border: 1px solid var(--glass-border); border-radius: 8px; color: #FFF;">
+      </div>
+
+      <div id="parentalPinErr" style="display:none; color:var(--accent-rose); font-size:12px; margin-bottom:14px; font-weight:600;"><i class="ri-error-warning-fill"></i> Incorrect PIN. Please try again (Default: 0000)</div>
+
+      <button onclick="verifyParentalPin()" class="btn-play-full" style="background: var(--accent-purple); color: #FFF;">
+        <i class="ri-lock-unlock-line"></i> Unlock Content
+      </button>
+    </div>
+  </div>
+
+  <!-- Account Modal (legacy — now opens full accountView page) -->
+  <div class="modal-backdrop" id="accountModal" hidden></div>
+
+  <!-- Reusable info modal (used by account dialogs: login log, invite code, referral, etc.) -->
+  <div class="modal-backdrop" id="infoModal">
+    <div class="modal-card info-modal-card">
+      <button class="modal-close-btn" aria-label="Close" onclick="closeInfoModal()"><i class="ri-close-line"></i></button>
+      <h2 id="infoModalTitle">Info</h2>
+      <div class="info-body" id="infoModalBody"></div>
+      <div class="info-actions" id="infoModalActions"></div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Video Player Modal (Feature 4: Audio Track & Subtitle Selectors + Feature 7: PIP) -->
+  <div class="video-player-modal" id="videoPlayerModal">
+    <div class="video-modal-header">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="video-modal-close" onclick="closeVideoPlayer()"><i class="ri-arrow-left-line"></i> Close</button>
+        <div class="video-modal-title" id="videoModalTitle">SunPlex 4K Stream</div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <!-- Feature 4: Audio Track Selector -->
+        <select id="audioTrackSelect" class="player-select-pill" title="Audio Track">
+          <option value="Hindi">🔊 Hindi Dubbed</option>
+          <option value="English">🔊 English Original</option>
+          <option value="Bengali">🔊 Bengali</option>
+        </select>
+
+        <!-- Feature 4: Subtitle Selector -->
+        <select id="subtitleSelect" class="player-select-pill" title="Subtitle Language">
+          <option value="Off">💬 Subtitles: Off</option>
+          <option value="English">💬 English</option>
+          <option value="Bangla">💬 Bangla</option>
+        </select>
+
+        <!-- Mobile Display Portrait Mode Toggle Button -->
+        <button class="header-icon-btn" id="mobilePortraitBtn" onclick="toggleMobilePortraitMode()" title="Toggle Mobile Display Portrait Mode">
+          <i class="ri-smartphone-line"></i> <span style="font-size:12px; margin-left:4px;" class="portrait-btn-text">Portrait</span>
+        </button>
+
+        <!-- Feature 7: Picture in Picture Button -->
+        <button class="header-icon-btn" onclick="togglePictureInPicture()" title="Picture in Picture Mini Player">
+          <i class="ri-picture-in-picture-line"></i>
+        </button>
+
+        <span class="video-quality-badge">1080p Ultra HD</span>
+      </div>
+    </div>
+    
+    <div class="video-container-box">
+      <video id="activeVideoElement" controls autoplay playsinline class="main-html5-video"></video>
+    </div>
+  </div>
+
+  </div><!-- /.app-container -->
+
+  <script src="app.js?v=2.8"></script>
+</body>
+</html>
