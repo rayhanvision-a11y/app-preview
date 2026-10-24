@@ -834,15 +834,32 @@ body.app-mode-active::-webkit-scrollbar {
 }
 
 .top-10-card {
-  flex: 0 0 145px;
   position: relative;
-  aspect-ratio: 2/3;
+  aspect-ratio: 2/3 !important;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--bg-dark-800);
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+}
+
+.top-10-carousel .top-10-card {
+  flex: 0 0 calc((100% - 24px) / 3);
+  width: calc((100% - 24px) / 3);
+  min-width: calc((100% - 24px) / 3);
+  max-width: calc((100% - 24px) / 3);
+  height: auto;
+  aspect-ratio: 2/3 !important;
+}
+
+@media (max-width: 480px) {
+  .top-10-carousel .top-10-card {
+    flex: 0 0 calc((100% - 12px) / 2);
+    width: calc((100% - 12px) / 2);
+    min-width: calc((100% - 12px) / 2);
+    max-width: calc((100% - 12px) / 2);
+  }
 }
 
 /* Mouse hover effects removed on all slider cards per user request */
@@ -919,7 +936,8 @@ body.app-mode-active::-webkit-scrollbar {
 .poster-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: #0b0f1a;
   pointer-events: none;
   -webkit-user-drag: none;
   user-drag: none;
@@ -1524,6 +1542,14 @@ body.app-mode-active::-webkit-scrollbar {
   flex-direction: column;
   gap: 2px;
 }
+
+.drawer-item-danger {
+  color: var(--accent-rose, #ef4444) !important;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.drawer-item-danger i { color: var(--accent-rose, #ef4444); }
+.drawer-item-danger:hover { background: rgba(239, 68, 68, 0.12) !important; }
 
 .drawer-item {
   display: flex;
@@ -2299,11 +2325,25 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 
 .category-listing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.category-listing-grid .top-10-card { flex: none; }
+@media (max-width: 480px) {
+  .category-listing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.category-listing-grid .top-10-card {
+  flex: none;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 2/3 !important;
+  height: auto;
+  box-sizing: border-box;
+}
 
 .category-listing-empty {
   grid-column: 1 / -1;
@@ -2447,13 +2487,15 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 /* ================= Actor Filmography Grid (3 Columns) & Pagination ================= */
 #actorFilmographyGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px;
 }
 
 #actorFilmographyGrid .top-10-card {
   flex: none !important;
   width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
   aspect-ratio: 2/3 !important;
 }
 
@@ -3071,11 +3113,19 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 
 .search-results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.search-results-grid .top-10-card { flex: none; }
+.search-results-grid .top-10-card {
+  flex: none;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 2/3 !important;
+  height: auto;
+  box-sizing: border-box;
+}
 
 .search-no-results {
   grid-column: 1 / -1;
@@ -3139,6 +3189,12 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 }
 
 /* Profile Card */
+.profile-card-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .profile-card {
   display: flex;
   align-items: center;
@@ -4384,9 +4440,38 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 
 .movies-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 16px;
-  padding: 0 20px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+.movies-grid-container .top-10-card {
+  flex: none;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 2/3 !important;
+  height: auto;
+}
+
+/* Series/Movies catalog: always 3 posters per row, columns can shrink */
+.movies-grid-container.series-grid-3col {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.movies-grid-container.series-grid-3col .top-10-card {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .movies-grid-container.series-grid-3col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* Responsive Media Queries */
@@ -4644,17 +4729,51 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
   padding: 6px;
 }
 
-/* Advanced Filter Bar Styles */
+/* Advanced Filter Bar Styles with Glassmorphism */
 .advanced-filter-bar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
-  background: var(--bg-dark-800);
-  border: 1px solid var(--glass-border);
+  background: linear-gradient(135deg, rgba(252, 83, 5, 0.10) 0%, rgba(31, 41, 55, 0.55) 45%, rgba(124, 58, 237, 0.12) 100%);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-md);
-  padding: 12px 18px;
-  margin-bottom: 20px;
+  padding: 16px 22px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.advanced-filter-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 20%, rgba(252, 83, 5, 0.18), transparent 55%),
+              radial-gradient(circle at 85% 80%, rgba(124, 58, 237, 0.18), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.advanced-filter-bar > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Native dropdown options — dark theme to match glass UI */
+.filter-group select option {
+  background-color: #111827;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 8px;
+}
+
+.filter-group select option:checked,
+.filter-group select option:hover {
+  background: linear-gradient(90deg, #FC5305, #EA580C);
+  color: #FFFFFF;
 }
 
 .filter-group {
@@ -4665,15 +4784,166 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
   color: var(--text-muted);
 }
 
+.filter-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sunplex-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-group label i {
+  font-size: 14px;
+}
+
 .filter-group select {
-  background: var(--bg-dark-700);
-  border: 1px solid var(--glass-border);
+  background-color: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   color: #FFFFFF;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 8px 34px 8px 14px;
+  border-radius: 8px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='%23FFFFFF'%3E%3Cpath d='M12 15l-4-4h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.filter-group select:hover {
+  background-color: rgba(55, 65, 81, 0.85);
+  border-color: rgba(252, 83, 5, 0.6);
+}
+
+.filter-group select:focus {
+  border-color: var(--sunplex-orange);
+  box-shadow: 0 0 0 2px rgba(252, 83, 5, 0.25);
+}
+
+/* Fix Windows default white background on select dropdown options */
+.filter-group select option {
+  background-color: #111827 !important;
+  color: #FFFFFF !important;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+/* Catalog Pagination Styles (Movies & Series Catalog) */
+.catalog-pagination-wrap {
+  margin-top: 32px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.catalog-pagination-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+}
+
+.catalog-page-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFF;
+  padding: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.catalog-page-arrow:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--sunplex-orange), #EA580C);
+  border-color: var(--sunplex-orange);
+  color: #FFF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(252, 83, 5, 0.4);
+}
+
+.catalog-page-arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.catalog-page-numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.catalog-page-num {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.catalog-page-num:hover:not(.active) {
+  color: #FFF;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.catalog-page-num.active {
+  background: linear-gradient(135deg, var(--sunplex-orange), #EA580C);
+  color: #FFF;
+  border-color: rgba(255, 255, 255, 0.35);
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(252, 83, 5, 0.45);
+}
+
+.catalog-page-ellipsis {
+  color: var(--text-muted);
+  font-weight: 700;
+  padding: 0 4px;
+}
+
+.catalog-page-summary {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .player-select-pill {

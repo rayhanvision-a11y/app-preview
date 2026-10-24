@@ -502,6 +502,816 @@ const MOVIES_DATA = [
     castDetails: [{"name":"Natsuki Hanae","character":"Tanjirō Kamado (voice)","photo":"https://image.tmdb.org/t/p/w185/alTb0DlcPIbcwM08WSmxFai58sd.jpg"},{"name":"Akari Kito","character":"Nezuko Kamado (voice)","photo":"https://image.tmdb.org/t/p/w185/AoRQOZRC0yINB0WeKnM569rV1wF.jpg"},{"name":"Hiro Shimono","character":"Zenitsu Agatsuma (voice)","photo":"https://image.tmdb.org/t/p/w185/yrSDcgFefHtWkFmLnTrcw2t0MV.jpg"},{"name":"Yoshitsugu Matsuoka","character":"Inosuke Hashibira (voice)","photo":"https://image.tmdb.org/t/p/w185/ugDwdWEXnmv43jcbnfAi4XwiQ8C.jpg"}],
     creator: "Koyoharu Gotouge",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
+  },
+  // --- Additional Popular Movies for Full 20-per-page Pagination ---
+  {
+    id: 1001,
+    tmdbId: 157336,
+    title: "Interstellar",
+    subTitle: "Mankind Was Born on Earth",
+    year: "2014",
+    rating: "13+",
+    imdb: "8.7",
+    duration: "2h 49m",
+    genre: "Adventure / Drama / Sci-Fi",
+    tags: "Space • Black Hole • Christopher Nolan",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "4K",
+    topRank: 6,
+    poster: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/rAiYTsqJiOEZlh00nZMCha4gPnn.jpg",
+    summary: "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot is tasked to pilot a spacecraft to find a new planet for humanity.",
+    cast: "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine",
+    creator: "Christopher Nolan",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1002,
+    tmdbId: 27205,
+    title: "Inception",
+    subTitle: "Your Mind Is The Scene Of The Crime",
+    year: "2010",
+    rating: "13+",
+    imdb: "8.8",
+    duration: "2h 28m",
+    genre: "Action / Sci-Fi / Adventure",
+    tags: "Dreams • Mind-Bending • Masterpiece",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "1080p",
+    topRank: 7,
+    poster: "https://image.tmdb.org/t/p/w500/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+    summary: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+    cast: "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
+    creator: "Christopher Nolan",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1003,
+    tmdbId: 155,
+    title: "The Dark Knight",
+    subTitle: "Why So Serious?",
+    year: "2008",
+    rating: "13+",
+    imdb: "9.0",
+    duration: "2h 32m",
+    genre: "Action / Crime / Drama",
+    tags: "Batman • Joker • Gotham",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "4K",
+    topRank: 8,
+    poster: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/nMKdUUepR0i5zn0y1T4CsSB5chy.jpg",
+    summary: "When the menace known as the Joker wreaks havoc on Gotham City, Batman must accept one of the greatest psychological tests of his ability to fight injustice.",
+    cast: "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine",
+    creator: "Christopher Nolan",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1004,
+    tmdbId: 299534,
+    title: "Avengers: Endgame",
+    subTitle: "Part of the Journey is the End",
+    year: "2019",
+    rating: "13+",
+    imdb: "8.4",
+    duration: "3h 01m",
+    genre: "Action / Adventure / Sci-Fi",
+    tags: "Marvel • Thanos • Infinity Stones",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "4K",
+    topRank: 9,
+    poster: "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+    summary: "After the devastating events of Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more to reverse Thanos' actions.",
+    cast: "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson",
+    creator: "Anthony Russo, Joe Russo",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1005,
+    tmdbId: 558449,
+    title: "Gladiator II",
+    subTitle: "Strength and Honor",
+    year: "2024",
+    rating: "16+",
+    imdb: "7.1",
+    duration: "2h 28m",
+    genre: "Action / Adventure / Drama",
+    tags: "Rome • Colosseum • Epic Combat",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "Hall Print",
+    topRank: 10,
+    poster: "https://image.tmdb.org/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/euYIwmwkmz95mnXvufEmbL69ovr.jpg",
+    summary: "Years after witnessing the death of Maximus at the hands of his uncle, Lucius must enter the Colosseum after his home is conquered by Roman emperors.",
+    cast: "Paul Mescal, Pedro Pascal, Denzel Washington, Connie Nielsen",
+    creator: "Ridley Scott",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1006,
+    tmdbId: 76600,
+    title: "Avatar: The Way of Water",
+    subTitle: "Return to Pandora",
+    year: "2022",
+    rating: "13+",
+    imdb: "7.6",
+    duration: "3h 12m",
+    genre: "Sci-Fi / Action / Adventure",
+    tags: "Pandora • Oceanic • Visual Spectacle",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "4K",
+    poster: "https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg",
+    summary: "Jake Sully lives with his newfound family on Pandora. Once a familiar threat returns, Jake must work with Neytiri and the Na'vi to protect their home.",
+    cast: "Sam Worthington, Zoe Saldaña, Sigourney Weaver, Stephen Lang",
+    creator: "James Cameron",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1007,
+    tmdbId: 897087,
+    title: "Salaar: Part 1 - Ceasefire",
+    subTitle: "Most Violent Man",
+    year: "2023",
+    rating: "16+",
+    imdb: "6.5",
+    duration: "2h 55m",
+    genre: "Action / Crime / Drama",
+    tags: "Prabhas • Khansaar • Bloodbath",
+    type: "MOVIE",
+    category: "Bollywood",
+    badge: "Dual Audio",
+    poster: "https://image.tmdb.org/t/p/w500/mHdqlQ1vVj7zWJ8m1K27d5Z4c1p.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/jXJxMcVoBWPwhznMRQI8QIS2bcf.jpg",
+    summary: "A gang leader makes a promise to a dying friend and takes on other criminal syndicates in the dystopian city-state of Khansaar.",
+    cast: "Prabhas, Prithviraj Sukumaran, Shruti Haasan, Jagapathi Babu",
+    creator: "Prashanth Neel",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1008,
+    tmdbId: 690957,
+    title: "Pushpa: The Rise",
+    subTitle: "Jhukega Nahi Saala",
+    year: "2021",
+    rating: "16+",
+    imdb: "7.6",
+    duration: "2h 59m",
+    genre: "Action / Crime / Drama",
+    tags: "Allu Arjun • Red Sanders • Seshachalam",
+    type: "MOVIE",
+    category: "Bollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/7c9UVPPiTPltouxShY9JH934vQG.jpg",
+    summary: "Pushpa Raj, a coolie in the Seshachalam Forests of South India, rises up the ranks of a red sandalwood smuggling cartel.",
+    cast: "Allu Arjun, Rashmika Mandanna, Fahadh Faasil, Sunil",
+    creator: "Sukumar",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1009,
+    tmdbId: 1079091,
+    title: "Stree 2",
+    subTitle: "Sarkate Ka Aatank",
+    year: "2024",
+    rating: "13+",
+    imdb: "7.2",
+    duration: "2h 27m",
+    genre: "Comedy / Horror",
+    tags: "Chanderi • Sarkata • Horror Comedy",
+    type: "MOVIE",
+    category: "Horror",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/7aPrv2Y8oZwz50x7zQ0z6kO7v7.jpg",
+    summary: "The small town of Chanderi is being haunted again, this time by a terrifying headless entity named Sarkata who kidnaps independent women.",
+    cast: "Rajkummar Rao, Shraddha Kapoor, Pankaj Tripathi, Abhishek Banerjee",
+    creator: "Amar Kaushik",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1010,
+    tmdbId: 850165,
+    title: "Fighter",
+    subTitle: "Air Dragons On Guard",
+    year: "2024",
+    rating: "13+",
+    imdb: "6.3",
+    duration: "2h 46m",
+    genre: "Action / Thriller / War",
+    tags: "Air Force • Jet Combat • Hrithik",
+    type: "MOVIE",
+    category: "Bollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/zDzvcW6f3D4p3e0y6t7j2y4u8a1.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/bylsq9xHqZ3f7tK8y0z2q8x.jpg",
+    summary: "An elite Indian Air Force squadron is commissioned to counter militant incursions into the Kashmir valley.",
+    cast: "Hrithik Roshan, Deepika Padukone, Anil Kapoor, Karan Singh Grover",
+    creator: "Siddharth Anand",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1011,
+    tmdbId: 969492,
+    title: "Dunki",
+    subTitle: "A Journey of Dreams",
+    year: "2023",
+    rating: "13+",
+    imdb: "6.8",
+    duration: "2h 40m",
+    genre: "Comedy / Drama",
+    tags: "SRK • Immigrants • Heartwarming",
+    type: "MOVIE",
+    category: "Bollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/4b0051e8p2u7o3y6t7j2y4u8a1.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/mDeUmvisL96f01B05a41n6h2kX.jpg",
+    summary: "Four friends from a Punjab village embark on an arduous illegal journey known as the Donkey flight to reach England.",
+    cast: "Shah Rukh Khan, Taapsee Pannu, Vicky Kaushal, Boman Irani",
+    creator: "Rajkumar Hirani",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1012,
+    tmdbId: 346698,
+    title: "Barbie",
+    subTitle: "She's Everything. He's Just Ken.",
+    year: "2023",
+    rating: "13+",
+    imdb: "6.9",
+    duration: "1h 54m",
+    genre: "Comedy / Fantasy",
+    tags: "Barbie Land • Ryan Gosling • Vibrant",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/ctMserH8g2SeOAnCw5gFjd2NTLq.jpg",
+    summary: "To live in Barbie Land is to be a perfect being in a perfect place, until Barbie begins having an existential crisis.",
+    cast: "Margot Robbie, Ryan Gosling, America Ferrera, Will Ferrell",
+    creator: "Greta Gerwig",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1013,
+    tmdbId: 823464,
+    title: "Godzilla x Kong: The New Empire",
+    subTitle: "Rise Together or Fall Alone",
+    year: "2024",
+    rating: "13+",
+    imdb: "6.2",
+    duration: "1h 55m",
+    genre: "Action / Sci-Fi / Adventure",
+    tags: "Titans • Hollow Earth • Monsterverse",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "Hall Print",
+    poster: "https://image.tmdb.org/t/p/w500/bQ2ywAy0z7EZ9vjbtdaTGCHUMdn.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/qrGtVF3YZvJneCuNkFiF0SaD5xU.jpg",
+    summary: "An all-new cinematic adventure pits the almighty Kong and Godzilla against a colossal undiscovered titan threat in Hollow Earth.",
+    cast: "Rebecca Hall, Brian Tyree Henry, Dan Stevens, Kaylee Hottle",
+    creator: "Adam Wingard",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1014,
+    tmdbId: 786892,
+    title: "Furiosa: A Mad Max Saga",
+    subTitle: "Out of the Wasteland",
+    year: "2024",
+    rating: "16+",
+    imdb: "7.6",
+    duration: "2h 28m",
+    genre: "Action / Sci-Fi / Adventure",
+    tags: "Wasteland • Anya Taylor-Joy • Chris Hemsworth",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/iADOJ8Zymht2JPMoy3R7xUMZ51.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/w2DYzTsv96u4l6nJ6wG6Zp5UoK.jpg",
+    summary: "Young Furiosa is snatched from the Green Place of Many Mothers and falls into the hands of a great Biker Horde led by Warlord Dementus.",
+    cast: "Anya Taylor-Joy, Chris Hemsworth, Tom Burke, Alyla Browne",
+    creator: "George Miller",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1015,
+    tmdbId: 1022789,
+    title: "Inside Out 2",
+    subTitle: "Make Room for New Emotions",
+    year: "2024",
+    rating: "13+",
+    imdb: "7.6",
+    duration: "1h 36m",
+    genre: "Animation / Family / Comedy",
+    tags: "Pixar • Anxiety • Emotional Joy",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/xg27NrXi7vCGUrsqm5FPIWRvmm.jpg",
+    summary: "Teenager Riley's mind headquarters undergoes sudden renovation to make room for new emotions led by Anxiety, Envy, and Embarrassment.",
+    cast: "Amy Poehler, Maya Hawke, Kensington Tallman, Liza Lapira",
+    creator: "Kelsey Mann",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1016,
+    tmdbId: 414906,
+    title: "The Batman",
+    subTitle: "Unmask the Truth",
+    year: "2022",
+    rating: "16+",
+    imdb: "7.8",
+    duration: "2h 56m",
+    genre: "Action / Crime / Drama",
+    tags: "Detective • Riddler • Dark Gotham",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/5P8SmMzSNYikXpxil6BYzJ16611.jpg",
+    summary: "In his second year of fighting crime, Batman uncovers deep-seated corruption in Gotham City connected to his own family.",
+    cast: "Robert Pattinson, Zoë Kravitz, Paul Dano, Jeffrey Wright, Colin Farrell",
+    creator: "Matt Reeves",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1017,
+    tmdbId: 1075794,
+    title: "Leo",
+    subTitle: "Bloody Sweet",
+    year: "2023",
+    rating: "16+",
+    imdb: "7.2",
+    duration: "2h 44m",
+    genre: "Action / Thriller / Crime",
+    tags: "Thalapathy Vijay • LCU • High Octane",
+    type: "MOVIE",
+    category: "Bollywood",
+    badge: "Dual Audio",
+    poster: "https://image.tmdb.org/t/p/w500/bXi6IQiCuKKHD0TKJ1ohjO14sT8.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
+    summary: "A mild-mannered cafe owner in Himachal Pradesh is pursued by ruthless mobsters who suspect he is their former enforcer Leo Das.",
+    cast: "Vijay, Sanjay Dutt, Arjun Sarja, Trisha Krishnan",
+    creator: "Lokesh Kanagaraj",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1018,
+    tmdbId: 1181548,
+    title: "12th Fail",
+    subTitle: "Restart Your Life",
+    year: "2023",
+    rating: "13+",
+    imdb: "8.9",
+    duration: "2h 27m",
+    genre: "Drama / Biography",
+    tags: "Inspirational • UPSC • Chambal",
+    type: "MOVIE",
+    category: "Bollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/y7xTEgt7R36Fpooo50r9T25onhq.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/jXJxMcVoBWPwhznMRQI8QIS2bcf.jpg",
+    summary: "Based on the true story of Manoj Kumar Sharma who rises from extreme poverty in Chambal to become an Indian Police Service officer.",
+    cast: "Vikrant Massey, Medha Shankr, Anant V Joshi, Anshumaan Pushkar",
+    creator: "Vidhu Vinod Chopra",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1019,
+    tmdbId: 653346,
+    title: "Kingdom of the Planet of the Apes",
+    subTitle: "Noa's Odyssey",
+    year: "2024",
+    rating: "13+",
+    imdb: "7.0",
+    duration: "2h 25m",
+    genre: "Action / Sci-Fi / Adventure",
+    tags: "Caesar Legacy • Primates • Future Earth",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/gKkl37BQuKTanygYQG1pyYgLVgf.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/fqv8v6AycXKsivp1TddutaLIx0J.jpg",
+    summary: "Generations after Caesar's reign, a young ape embarks on a journey that will define the future of apes and humans alike.",
+    cast: "Owen Teague, Freya Allan, Kevin Durand, Peter Macon",
+    creator: "Wes Ball",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1020,
+    tmdbId: 718821,
+    title: "Twisters",
+    subTitle: "Ride The Tornado",
+    year: "2024",
+    rating: "13+",
+    imdb: "6.6",
+    duration: "2h 02m",
+    genre: "Action / Adventure / Thriller",
+    tags: "Storm Chasers • Oklahoma • Tornadoes",
+    type: "MOVIE",
+    category: "Hollywood",
+    badge: "Hall Print",
+    poster: "https://image.tmdb.org/t/p/w500/b33nnKl1vVO9d5WDU5VNA49eGhd.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/58D3293VRKBeH451gC5k3y1p0.jpg",
+    summary: "A former storm chaser and her reckless social-media crew test a groundbreaking new weather tracking system in the Oklahoma plains.",
+    cast: "Daisy Edgar-Jones, Glen Powell, Anthony Ramos, Brandon Perea",
+    creator: "Lee Isaac Chung",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1021,
+    tmdbId: 423108,
+    title: "The Conjuring: The Devil Made Me Do It",
+    subTitle: "Paranormal Investigators",
+    year: "2021",
+    rating: "18+",
+    imdb: "6.3",
+    duration: "1h 52m",
+    genre: "Horror / Mystery / Thriller",
+    tags: "Ed and Lorraine • Demonic • Chilling",
+    type: "MOVIE",
+    category: "Horror",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/qi6Edc1OPcyENecGmj8weqY4Zh2.jpg",
+    summary: "A chilling story of terror and demonic possession that marked the first time in U.S. history that demonic possession was cited in court.",
+    cast: "Patrick Wilson, Vera Farmiga, Ruairi O'Connor, Sarah Catherine Hook",
+    creator: "Michael Chaves",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1022,
+    tmdbId: 1100782,
+    title: "Smile 2",
+    subTitle: "It Will Never Let You Go",
+    year: "2024",
+    rating: "18+",
+    imdb: "7.0",
+    duration: "2h 07m",
+    genre: "Horror / Mystery / Thriller",
+    tags: "Pop Star • Curse • Terrifying Smile",
+    type: "MOVIE",
+    category: "Horror",
+    badge: "Hall Print",
+    poster: "https://image.tmdb.org/t/p/w500/aE85MnPIvj629EF30y7M6GZ8oA.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/iR79ciqhtzg0m6m98jK3l0p8z.jpg",
+    summary: "About to embark on a world tour, global pop sensation Skye Riley begins experiencing increasingly terrifying and inexplicable events.",
+    cast: "Naomi Scott, Rosemarie DeWitt, Lukas Gage, Miles Gutierrez-Riley",
+    creator: "Parker Finn",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 1023,
+    tmdbId: 1034541,
+    title: "Terrifier 3",
+    subTitle: "Art the Clown is Back",
+    year: "2024",
+    rating: "18+",
+    imdb: "6.5",
+    duration: "2h 05m",
+    genre: "Horror / Splatter",
+    tags: "Art the Clown • Miles County • Extreme",
+    type: "MOVIE",
+    category: "Horror",
+    badge: "Hall Print",
+    poster: "https://image.tmdb.org/t/p/w500/l1175hgL5vgO9iNz1bvyipTeBt.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/v9acaWVxMwIvd519782xL5p4m.jpg",
+    summary: "Art the Clown unleashes chaos on the residents of Miles County as they peacefully fall asleep on Christmas Eve.",
+    cast: "Lauren LaVera, David Howard Thornton, Antonella Rose, Elliott Fullam",
+    creator: "Damien Leone",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  // --- Additional TV Series for Full 20-per-page Pagination ---
+  {
+    id: 2001,
+    tmdbId: 1399,
+    title: "Game of Thrones",
+    subTitle: "Winter Is Coming",
+    year: "2019",
+    rating: "18+",
+    imdb: "9.2",
+    duration: "8 Seasons",
+    genre: "Series / Drama / Fantasy",
+    tags: "Westeros • Dragons • Iron Throne",
+    type: "SERIES",
+    category: "Series",
+    badge: "4K",
+    topRank: 6,
+    poster: "https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/2OMB0ynKlyIenMJWI2Dy9IWT4c.jpg",
+    summary: "Nine noble families fight for control over the mythical lands of Westeros, while an ancient white walker threat returns from the deep north.",
+    cast: "Emilia Clarke, Kit Harington, Peter Dinklage, Lena Headey",
+    creator: "David Benioff, D.B. Weiss",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2002,
+    tmdbId: 100088,
+    title: "The Last of Us",
+    subTitle: "When You're Lost in the Darkness",
+    year: "2023",
+    rating: "18+",
+    imdb: "8.8",
+    duration: "1 Season",
+    genre: "Series / Drama / Sci-Fi",
+    tags: "Cordyceps • Joel and Ellie • Post-Apocalyptic",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    topRank: 7,
+    poster: "https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqMis2SYawAO.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/a2tVaqtF62O0yX8v0p8z.jpg",
+    summary: "Twenty years after fungal pandemic destroyed civilization, hardened survivor Joel is hired to smuggle 14-year-old Ellie out of an oppressive quarantine zone.",
+    cast: "Pedro Pascal, Bella Ramsey, Gabriel Luna, Anna Torv",
+    creator: "Craig Mazin, Neil Druckmann",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2003,
+    tmdbId: 126308,
+    title: "Shōgun",
+    subTitle: "War is Coming to Japan",
+    year: "2024",
+    rating: "18+",
+    imdb: "8.7",
+    duration: "1 Season",
+    genre: "Series / Drama / History",
+    tags: "Feudal Japan • Samurai • Toranaga",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    topRank: 8,
+    poster: "https://image.tmdb.org/t/p/w500/7O4iVfOMQmdCSxhOg1WNzG1AgYT.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/5zmiLijm9RwhTeT2AOHdhrkqqQe.jpg",
+    summary: "When an English ship washes ashore in Japan, its navigator John Blackthorne becomes a crucial pawn in Lord Toranaga's bid for the shogunate.",
+    cast: "Hiroyuki Sanada, Cosmo Jarvis, Anna Sawai, Tadanobu Asano",
+    creator: "Rachel Kondo, Justin Marks",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2004,
+    tmdbId: 76331,
+    title: "Succession",
+    subTitle: "Waystar Royco Empire",
+    year: "2023",
+    rating: "18+",
+    imdb: "8.9",
+    duration: "4 Seasons",
+    genre: "Series / Drama",
+    tags: "Billionaires • Corporate Betrayal • Roy Family",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    topRank: 9,
+    poster: "https://image.tmdb.org/t/p/w500/7TafFqEwVjZk6U1M0YxZ5v4w6t5.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/etjA2m5zP1uF4m9v3k7y5.jpg",
+    summary: "The Roy family controls Waystar RoyCo, one of the biggest media and entertainment conglomerates in the world. When Logan Roy considers stepping down, chaos erupts.",
+    cast: "Brian Cox, Jeremy Strong, Sarah Snook, Kieran Culkin, Matthew Macfadyen",
+    creator: "Jesse Armstrong",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2005,
+    tmdbId: 94997,
+    title: "House of the Dragon",
+    subTitle: "Fire and Blood",
+    year: "2024",
+    rating: "18+",
+    imdb: "8.4",
+    duration: "2 Seasons",
+    genre: "Series / Action / Drama",
+    tags: "Targaryen • Dragons • Dance of the Dragons",
+    type: "SERIES",
+    category: "Series",
+    badge: "4K",
+    topRank: 10,
+    poster: "https://image.tmdb.org/t/p/w500/1X4h40fcB4WWUmIBK0auT4zRBAV.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/etjGhu7P43u1p1A3GqK3l0p8z.jpg",
+    summary: "The story of the Targaryen civil war that took place about 200 years before the events of Game of Thrones.",
+    cast: "Matt Smith, Emma D'Arcy, Olivia Cooke, Rhys Ifans",
+    creator: "Ryan J. Condal, George R.R. Martin",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2006,
+    tmdbId: 76479,
+    title: "The Boys",
+    subTitle: "Never Meet Your Heroes",
+    year: "2024",
+    rating: "18+",
+    imdb: "8.7",
+    duration: "4 Seasons",
+    genre: "Series / Action / Sci-Fi",
+    tags: "Homelander • Vought • Anti-Heroes",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/2zm7mKuZIgCU66SN9PvK2Fym5Iq.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/n6bUvigpRFqSwmPp1m2v5u5Z.jpg",
+    summary: "A gritty and irreverent take on what happens when superheroes abuse their superpowers rather than use them for good, pursued by a vigilante group called The Boys.",
+    cast: "Karl Urban, Jack Quaid, Antony Starr, Erin Moriarty",
+    creator: "Eric Kripke",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2007,
+    tmdbId: 84958,
+    title: "Loki",
+    subTitle: "God of Stories",
+    year: "2023",
+    rating: "13+",
+    imdb: "8.2",
+    duration: "2 Seasons",
+    genre: "Series / Sci-Fi / Adventure",
+    tags: "TVA • Multiverse • Tom Hiddleston",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/voHUAtDc0qKdLz9h9vjX3f7m6r5.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
+    summary: "The God of Mischief is captured by the Time Variance Authority after stealing the Tesseract and forced to repair broken timelines across the multiverse.",
+    cast: "Tom Hiddleston, Owen Wilson, Sophia Di Martino, Ke Huy Quan",
+    creator: "Michael Waldron",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2008,
+    tmdbId: 60574,
+    title: "Peaky Blinders",
+    subTitle: "By Order of the Peaky Blinders",
+    year: "2022",
+    rating: "18+",
+    imdb: "8.8",
+    duration: "6 Seasons",
+    genre: "Series / Crime / Drama",
+    tags: "Tommy Shelby • Birmingham • Gangsters",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/2OMB0ynKlyIenMJWI2Dy9IWT4c.jpg",
+    summary: "A gangster family epic set in 1919 Birmingham, England, following Tommy Shelby as he maneuvers his family into political and financial dominance.",
+    cast: "Cillian Murphy, Paul Anderson, Sophie Rundle, Helen McCrory",
+    creator: "Steven Knight",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2009,
+    tmdbId: 106379,
+    title: "Fallout",
+    subTitle: "Welcome to the Wasteland",
+    year: "2024",
+    rating: "18+",
+    imdb: "8.4",
+    duration: "1 Season",
+    genre: "Series / Sci-Fi / Action",
+    tags: "Vault 33 • The Ghoul • Post-Nuclear",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/AnsSKR99HG0ZeW3999wc2xD4TLh.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/2meO0j2A3uI2p9v4m.jpg",
+    summary: "200 years after a nuclear war, optimistic vault dweller Lucy exits Vault 33 to rescue her father in the savagely bizarre Los Angeles wasteland.",
+    cast: "Ella Purnell, Walton Goggins, Aaron Moten, Moisés Arias",
+    creator: "Graham Wagner, Geneva Robertson-Dworet",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2010,
+    tmdbId: 70523,
+    title: "Dark",
+    subTitle: "The End Is The Beginning",
+    year: "2020",
+    rating: "16+",
+    imdb: "8.7",
+    duration: "3 Seasons",
+    genre: "Series / Sci-Fi / Mystery",
+    tags: "Time Travel • Winden • German Masterpiece",
+    type: "SERIES",
+    category: "Series",
+    badge: "Dual Audio",
+    poster: "https://image.tmdb.org/t/p/w500/apbrkTkOxvxapNkNaLnk6f7N8Q.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/3GQKYh6Trm8pxd2AypovoYQf4Ay.jpg",
+    summary: "The disappearance of two children in the small town of Winden unearths the double lives and fractured relationships among four interconnected families.",
+    cast: "Louis Hofmann, Karoline Eichhorn, Lisa Vicari, Maja Schöne",
+    creator: "Baran bo Odar, Jantje Friese",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2011,
+    tmdbId: 93405,
+    title: "Squid Game",
+    subTitle: "45.6 Billion is Child's Play",
+    year: "2021",
+    rating: "18+",
+    imdb: "8.0",
+    duration: "1 Season",
+    genre: "Series / Thriller / Drama",
+    tags: "Survival Game • Korean • Red Light Green Light",
+    type: "SERIES",
+    category: "Series",
+    badge: "Dual Audio",
+    poster: "https://image.tmdb.org/t/p/w500/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/7aPrv2Y8oZwz50x7zQ0z6kO7v7.jpg",
+    summary: "Hundreds of cash-strapped contestants accept an invitation to compete in children's games for a massive financial reward, only to find loss is lethal.",
+    cast: "Lee Jung-jae, Park Hae-soo, Wi Ha-joon, Jung Ho-yeon",
+    creator: "Hwang Dong-hyuk",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2012,
+    tmdbId: 71912,
+    title: "The Witcher",
+    subTitle: "The Monster You Burn",
+    year: "2023",
+    rating: "18+",
+    imdb: "8.0",
+    duration: "3 Seasons",
+    genre: "Series / Action / Fantasy",
+    tags: "Geralt of Rivia • Monsters • Magic",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/7vjaCdMw15FEbDYvtMbu5VWImi3.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/tsRy63Mu5cu8etL1X7ZLyf7UP1M.jpg",
+    summary: "Geralt of Rivia, a mutated monster hunter for hire, journeys toward his destiny in a turbulent world where humans are often more wicked than beasts.",
+    cast: "Henry Cavill, Anya Chalotra, Freya Allan, Joey Batey",
+    creator: "Lauren Schmidt Hissrich",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2013,
+    tmdbId: 87108,
+    title: "Chernobyl",
+    subTitle: "What Is The Cost Of Lies?",
+    year: "2019",
+    rating: "18+",
+    imdb: "9.3",
+    duration: "1 Season",
+    genre: "Series / Drama / History",
+    tags: "Nuclear Disaster • Soviet • True Events",
+    type: "SERIES",
+    category: "Series",
+    badge: "1080p",
+    poster: "https://image.tmdb.org/t/p/w500/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/tsRy63Mu5cu8etL1X7ZLyf7UP1M.jpg",
+    summary: "A dramatization of the 1986 nuclear accident in Ukraine, focusing on the heroic sacrifices made to save Europe from unimaginable disaster.",
+    cast: "Jared Harris, Stellan Skarsgård, Emily Watson, Paul Ritter",
+    creator: "Craig Mazin",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2014,
+    tmdbId: 94605,
+    title: "Arcane",
+    subTitle: "Piltover & Zaun",
+    year: "2024",
+    rating: "16+",
+    imdb: "9.0",
+    duration: "2 Seasons",
+    genre: "Series / Anime / Action",
+    tags: "League of Legends • Jinx • Masterpiece",
+    type: "SERIES",
+    category: "Series",
+    badge: "4K",
+    poster: "https://image.tmdb.org/t/p/w500/fqldf2t8ztc9aiwn39x7fZnm324.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/3GQKYh6Trm8pxd2AypovoYQf4Ay.jpg",
+    summary: "Amid the stark discord of twin cities Piltover and Zaun, two sisters fight on rival sides of a war between magic technologies and convictions.",
+    cast: "Hailee Steinfeld, Ella Purnell, Kevin Alejandro, Katie Leung",
+    creator: "Christian Linke, Alex Yee",
+    streamUrl: DEFAULT_STREAM_URL
+  },
+  {
+    id: 2015,
+    tmdbId: 1429,
+    title: "Attack on Titan",
+    subTitle: "Shingeki no Kyojin",
+    year: "2023",
+    rating: "16+",
+    imdb: "9.1",
+    duration: "4 Seasons",
+    genre: "Series / Anime / Action",
+    tags: "Titans • Eren Yeager • Survey Corps",
+    type: "SERIES",
+    category: "Series",
+    badge: "Dual Audio",
+    poster: "https://image.tmdb.org/t/p/w500/hTP1DtLGFamjfu8WqjnuQdP1n4i.jpg",
+    backdrop: "https://image.tmdb.org/t/p/original/3GQKYh6Trm8pxd2AypovoYQf4Ay.jpg",
+    summary: "After his hometown is destroyed and his mother killed, young Eren Jaeger vows to cleanse the earth of giant humanoid Titans.",
+    cast: "Yuki Kaji, Yui Ishikawa, Marina Inoue, Hiroshi Kamiya",
+    creator: "Hajime Isayama",
+    streamUrl: DEFAULT_STREAM_URL
   }
 ];
 
@@ -1729,47 +2539,155 @@ function handleSearchInput(e) {
   }
 }
 
-// Render VOD Movies Grid
+// Catalog Pagination Configuration (20 items per page for Movies & Series)
+const CATALOG_PAGE_SIZE = 21;
+let currentMoviesCatalogPage = 1;
+let currentSeriesCatalogPage = 1;
+let currentMoviesCatalogCustomList = null;
+let currentSeriesCatalogCustomList = null;
+
+function renderCatalogPagination(wrapperId, currentPage, totalPages, totalItems, callbackFnName) {
+  const wrap = document.getElementById(wrapperId);
+  if (!wrap) return;
+  if (totalPages <= 1) {
+    wrap.innerHTML = `<div class="catalog-page-summary">Showing all ${totalItems} titles</div>`;
+    return;
+  }
+
+  let pages = [];
+  if (totalPages <= 5) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    let startP = Math.max(2, currentPage - 1);
+    let endP = Math.min(totalPages - 1, currentPage + 1);
+    if (startP > 2) pages.push('...');
+    for (let i = startP; i <= endP; i++) pages.push(i);
+    if (endP < totalPages - 1) pages.push('...');
+    pages.push(totalPages);
+  }
+
+  let buttonsHtml = '';
+  pages.forEach(p => {
+    if (p === '...') {
+      buttonsHtml += `<span class="catalog-page-ellipsis">…</span>`;
+    } else {
+      buttonsHtml += `<button class="catalog-page-num ${p === currentPage ? 'active' : ''}" onclick="${callbackFnName}(${p})">${p}</button>`;
+    }
+  });
+
+  const prevDisabled = currentPage === 1 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : '';
+  const nextDisabled = currentPage === totalPages ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : '';
+  const startItem = (currentPage - 1) * CATALOG_PAGE_SIZE + 1;
+  const endItem = Math.min(currentPage * CATALOG_PAGE_SIZE, totalItems);
+
+  wrap.innerHTML = `
+    <div class="catalog-pagination-container">
+      <button class="catalog-page-arrow" ${prevDisabled} onclick="${callbackFnName}(${currentPage - 1})" title="Previous Page" aria-label="Previous Page">
+        <i class="ri-arrow-left-s-line"></i>
+      </button>
+      <div class="catalog-page-numbers">
+        ${buttonsHtml}
+      </div>
+      <button class="catalog-page-arrow" ${nextDisabled} onclick="${callbackFnName}(${currentPage + 1})" title="Next Page" aria-label="Next Page">
+        <i class="ri-arrow-right-s-line"></i>
+      </button>
+    </div>
+    <div class="catalog-page-summary">Showing ${startItem}–${endItem} of ${totalItems} titles (Page ${currentPage} of ${totalPages})</div>
+  `;
+}
+
+// Render VOD Movies Grid (20 items per page)
 function renderMoviesGrid(filterQuery = '') {
   const grid = document.getElementById("moviesGrid");
+  const paginationWrap = document.getElementById("moviesPaginationWrap");
   if (!grid) return;
   grid.innerHTML = "";
 
-  const list = applyParentalCap(filterQuery
-    ? MOVIES_DATA.filter(m => m.title.toLowerCase().includes(filterQuery) || m.genre.toLowerCase().includes(filterQuery) || m.category?.toLowerCase().includes(filterQuery))
-    : MOVIES_DATA);
+  let list = currentMoviesCatalogCustomList;
+  if (!list) {
+    const movieBase = MOVIES_DATA.filter(m => m.type !== 'SERIES' && !(m.duration || '').includes('Season'));
+    list = applyParentalCap(filterQuery
+      ? movieBase.filter(m => m.title.toLowerCase().includes(filterQuery) || m.genre.toLowerCase().includes(filterQuery) || m.category?.toLowerCase().includes(filterQuery))
+      : movieBase);
+  }
 
-  list.forEach(movie => {
+  const totalItems = list.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / CATALOG_PAGE_SIZE));
+  if (currentMoviesCatalogPage > totalPages) currentMoviesCatalogPage = totalPages;
+  if (currentMoviesCatalogPage < 1) currentMoviesCatalogPage = 1;
+
+  if (!totalItems) {
+    grid.innerHTML = `<div class="channels-empty-state" style="grid-column:1/-1;"><i class="ri-film-line" style="font-size:26px; color:var(--accent-gold);"></i><br>No movies match your criteria</div>`;
+    if (paginationWrap) paginationWrap.innerHTML = "";
+    return;
+  }
+
+  const start = (currentMoviesCatalogPage - 1) * CATALOG_PAGE_SIZE;
+  const pageItems = list.slice(start, start + CATALOG_PAGE_SIZE);
+
+  pageItems.forEach(movie => {
     const card = document.createElement("div");
     card.className = "top-10-card";
     card.style.aspectRatio = "2/3";
     card.onclick = () => openFeaturedMovie(movie.id);
     const qBadge = getMovieQualityBadge(movie);
     const qClass = getQualityBadgeClass(qBadge);
+    const poster = movie.poster || 'https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';
     card.innerHTML = `
       <div class="top-10-badge ${qClass}">${qBadge}</div>
-      <img src="${movie.poster}" alt="${movie.title}" class="poster-img" loading="lazy" onerror="this.onerror=null; this.src='https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';">
+      <img src="${poster}" alt="${movie.title}" class="poster-img" loading="lazy" onerror="this.onerror=null; this.src='https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';">
       <div class="top-10-overlay">
         <div class="top-10-title">${movie.title}</div>
       </div>
     `;
     grid.appendChild(card);
   });
+
+  renderCatalogPagination('moviesPaginationWrap', currentMoviesCatalogPage, totalPages, totalItems, 'goToMoviesCatalogPage');
 }
 
+function goToMoviesCatalogPage(page) {
+  currentMoviesCatalogPage = page;
+  renderMoviesGrid();
+  document.getElementById("moviesGrid")?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Render TV Series Grid (20 items per page)
 function renderSeriesGrid() {
   const grid = document.getElementById("seriesGrid");
+  const paginationWrap = document.getElementById("seriesPaginationWrap");
   if (!grid) return;
   grid.innerHTML = "";
 
-  const seriesList = MOVIES_DATA.filter(m => m.type === 'SERIES' || m.duration.includes('Season'));
+  let list = currentSeriesCatalogCustomList;
+  if (!list) {
+    const seriesList = MOVIES_DATA.filter(m => m.type === 'SERIES' || (m.duration || '').includes('Season') || m.category === 'Series');
+    list = applyParentalCap(seriesList.length ? seriesList : MOVIES_DATA);
+  }
 
-  (seriesList.length ? seriesList : MOVIES_DATA).forEach(show => {
+  const totalItems = list.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / CATALOG_PAGE_SIZE));
+  if (currentSeriesCatalogPage > totalPages) currentSeriesCatalogPage = totalPages;
+  if (currentSeriesCatalogPage < 1) currentSeriesCatalogPage = 1;
+
+  if (!totalItems) {
+    grid.innerHTML = `<div class="channels-empty-state" style="grid-column:1/-1;"><i class="ri-clapperboard-line" style="font-size:26px; color:var(--accent-gold);"></i><br>No web series found</div>`;
+    if (paginationWrap) paginationWrap.innerHTML = "";
+    return;
+  }
+
+  const start = (currentSeriesCatalogPage - 1) * CATALOG_PAGE_SIZE;
+  const pageItems = list.slice(start, start + CATALOG_PAGE_SIZE);
+
+  pageItems.forEach(show => {
     const card = document.createElement("div");
     card.className = "top-10-card";
+    card.style.aspectRatio = "2/3";
     card.onclick = () => openFeaturedMovie(show.id);
     const qBadge = getMovieQualityBadge(show);
     const qClass = getQualityBadgeClass(qBadge);
+    const poster = show.poster || 'https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';
     card.innerHTML = `
       <div class="top-10-badge ${qClass}">${qBadge}</div>
       <img src="${show.poster}" alt="${show.title}" class="poster-img" loading="lazy" onerror="this.onerror=null; this.src='https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';">
@@ -1779,6 +2697,14 @@ function renderSeriesGrid() {
     `;
     grid.appendChild(card);
   });
+
+  renderCatalogPagination('seriesPaginationWrap', currentSeriesCatalogPage, totalPages, totalItems, 'goToSeriesCatalogPage');
+}
+
+function goToSeriesCatalogPage(page) {
+  currentSeriesCatalogPage = page;
+  renderSeriesGrid();
+  document.getElementById("seriesGrid")?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // IPTV Channels Renderer
@@ -3130,6 +4056,7 @@ function openSearchView() {
 function initSearchViewIfNeeded() {
   renderTrendingSearches();
   renderRecentSearches();
+  renderSearchDefaultContent();
   const inp = document.getElementById("searchPageInput");
   if (inp) {
     inp.value = searchState.query;
@@ -3146,6 +4073,34 @@ function initSearchViewIfNeeded() {
   } else {
     runSearch();
   }
+}
+
+function renderSearchDefaultContent() {
+  const grid = document.getElementById("searchDefaultGrid");
+  if (!grid) return;
+  const pool = applyParentalCap(MOVIES_DATA.slice());
+  const picks = pool
+    .slice()
+    .sort((a, b) => (parseFloat(b.imdb || 0) - parseFloat(a.imdb || 0)))
+    .slice(0, 18);
+  grid.innerHTML = "";
+  picks.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "top-10-card";
+    card.style.aspectRatio = "2/3";
+    card.onclick = () => openFeaturedMovie(item.id);
+    const qBadge = getMovieQualityBadge(item);
+    const qClass = getQualityBadgeClass(qBadge);
+    const poster = item.poster || 'https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';
+    card.innerHTML = `
+      <div class="top-10-badge ${qClass}">${qBadge}</div>
+      <img src="${poster}" alt="${item.title}" class="poster-img" loading="lazy" onerror="this.onerror=null; this.src='https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg';">
+      <div class="top-10-overlay">
+        <div class="top-10-title">${item.title}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 }
 
 function renderTrendingSearches() {
@@ -4338,40 +5293,31 @@ function applyAdvancedFilters(type) {
   const year = document.getElementById(`${prefix}YearFilter`)?.value || 'ALL';
   const rating = document.getElementById(`${prefix}RatingFilter`)?.value || 'ALL';
   const genre = document.getElementById(`${prefix}GenreFilter`)?.value || 'ALL';
+  const category = document.getElementById(`${prefix}CategoryFilter`)?.value || 'ALL';
 
   const typeFilter = isSeries
-    ? (m => m.type === 'SERIES' || (m.duration || '').includes('Season'))
-    : (m => m.type === 'MOVIE' || !m.type);
+    ? (m => m.type === 'SERIES' || (m.duration || '').includes('Season') || m.category === 'Series')
+    : (m => m.type !== 'SERIES' && !(m.duration || '').includes('Season'));
 
   let filtered = applyParentalCap(MOVIES_DATA.filter(typeFilter));
   if (year !== 'ALL') filtered = filtered.filter(m => String(m.year) === String(year));
   if (rating !== 'ALL') filtered = filtered.filter(m => m.rating === rating);
-  if (genre !== 'ALL') filtered = filtered.filter(m => (m.category || '').toLowerCase() === genre.toLowerCase() || (m.genre || '').toLowerCase().includes(genre.toLowerCase()));
-
-  const gridId = isSeries ? 'seriesGrid' : 'moviesGrid';
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-  grid.innerHTML = "";
-
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="channels-empty-state" style="grid-column:1/-1;"><i class="ri-filter-off-line" style="font-size:22px;"></i><br>No titles match these filters</div>`;
-    return;
+  if (category !== 'ALL') {
+    filtered = filtered.filter(m => (m.category || '').toLowerCase() === category.toLowerCase() || (m.genre || '').toLowerCase().includes(category.toLowerCase()));
+  }
+  if (genre !== 'ALL') {
+    filtered = filtered.filter(m => (m.category || '').toLowerCase() === genre.toLowerCase() || (m.genre || '').toLowerCase().includes(genre.toLowerCase()));
   }
 
-  filtered.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "top-10-card";
-    card.style.aspectRatio = "2/3";
-    card.onclick = () => openFeaturedMovie(item.id);
-    const qBadge = getMovieQualityBadge(item);
-    const qClass = getQualityBadgeClass(qBadge);
-    card.innerHTML = `
-      <div class="top-10-badge ${qClass}">${qBadge}</div>
-      <img src="${item.poster}" alt="${item.title}" class="poster-img" loading="lazy">
-      <div class="top-10-overlay"><div class="top-10-title">${item.title}</div></div>
-    `;
-    grid.appendChild(card);
-  });
+  if (isSeries) {
+    currentSeriesCatalogPage = 1;
+    currentSeriesCatalogCustomList = filtered;
+    renderSeriesGrid();
+  } else {
+    currentMoviesCatalogPage = 1;
+    currentMoviesCatalogCustomList = filtered;
+    renderMoviesGrid();
+  }
 }
 
 // Content-rating cap from Account preferences

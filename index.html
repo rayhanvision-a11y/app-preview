@@ -660,7 +660,8 @@
           <div class="section-header">
             <h2 class="section-title">All VOD Movies Catalog</h2>
           </div>
-          <div class="movies-grid-container" id="moviesGrid"></div>
+          <div class="movies-grid-container series-grid-3col" id="moviesGrid"></div>
+          <div class="catalog-pagination-wrap" id="moviesPaginationWrap"></div>
         </div>
       </section>
 
@@ -709,12 +710,35 @@
         <div class="content-section">
           <div class="advanced-filter-bar">
             <div class="filter-group">
-              <label><i class="ri-filter-3-line"></i> Genre:</label>
+              <label><i class="ri-filter-3-line"></i> Year:</label>
+              <select id="seriesYearFilter" onchange="applyAdvancedFilters('series')">
+                <option value="ALL">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2013">2013</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="ri-star-line"></i> Rating:</label>
+              <select id="seriesRatingFilter" onchange="applyAdvancedFilters('series')">
+                <option value="ALL">All Ratings</option>
+                <option value="18+">18+ Adult</option>
+                <option value="16+">16+</option>
+                <option value="13+">13+</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="ri-clapperboard-line"></i> Genre:</label>
               <select id="seriesGenreFilter" onchange="applyAdvancedFilters('series')">
                 <option value="ALL">All Genres</option>
                 <option value="Drama">Drama & Crime</option>
                 <option value="Sci-Fi">Sci-Fi & Thriller</option>
                 <option value="Anime">Anime</option>
+                <option value="Action">Action</option>
               </select>
             </div>
           </div>
@@ -764,7 +788,8 @@
           <div class="section-header">
             <h2 class="section-title">All TV Series Catalog</h2>
           </div>
-          <div class="movies-grid-container" id="seriesGrid"></div>
+          <div class="movies-grid-container series-grid-3col" id="seriesGrid"></div>
+          <div class="catalog-pagination-wrap" id="seriesPaginationWrap"></div>
         </div>
       </section>
 
@@ -950,11 +975,24 @@
             </div>
           </div>
 
-          <!-- Empty state: just Recent chips (hidden if none) -->
+          <!-- Default & Empty state: Trending chips + Recent chips + Default recommended content -->
           <div id="searchEmptyState">
+            <div class="search-block">
+              <div class="search-block-head"><i class="ri-fire-line" style="color: var(--sunplex-orange);"></i> Trending Searches</div>
+              <div class="search-chip-row" id="trendingSearchesRow"></div>
+            </div>
+
             <div class="search-block" id="recentSearchesBlock" hidden>
-              <div class="search-block-head"><i class="ri-time-line"></i> Recent</div>
+              <div class="search-block-head"><i class="ri-time-line"></i> Recent Searches</div>
               <div class="search-chip-row" id="recentSearchesRow"></div>
+            </div>
+
+            <div class="search-block" id="searchDefaultBlock">
+              <div class="search-block-head" style="margin-top: 18px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+                <span><i class="ri-sparkling-fill" style="color: var(--sunplex-orange);"></i> Popular & Recommended</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Movies & Web Series</span>
+              </div>
+              <div class="search-results-grid" id="searchDefaultGrid"></div>
             </div>
           </div>
 
@@ -990,7 +1028,10 @@
                   <span class="profile-dim">Member since <span id="profileMemberSince">2024</span></span>
                 </div>
               </div>
-              <button class="btn-outline" onclick="openEditProfile()"><i class="ri-edit-line"></i> Edit</button>
+              <div class="profile-card-actions">
+                <button class="btn-outline" onclick="openEditProfile()"><i class="ri-edit-line"></i> Edit</button>
+                <button class="btn-outline btn-danger" onclick="signOutCurrent()"><i class="ri-logout-box-r-line"></i> Logout</button>
+              </div>
             </div>
           </section>
 
@@ -1334,6 +1375,7 @@
       <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-shield-keyhole-line"></i><span>Security &amp; privacy</span></button>
       <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-trophy-line"></i><span>SunPlex Rewards</span></button>
       <button class="drawer-item" onclick="switchView('accountView'); closeAccountDrawer();"><i class="ri-question-line"></i><span>Help &amp; support</span></button>
+      <button class="drawer-item drawer-item-danger" onclick="signOutCurrent(); closeAccountDrawer();"><i class="ri-logout-box-r-line"></i><span>Logout</span></button>
     </div>
 
     <div class="side-drawer-footer">
