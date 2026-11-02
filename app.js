@@ -2984,7 +2984,7 @@ function toggleRecord() {
   if (!icon) return;
   const on = icon.classList.toggle("recording");
   icon.className = (on ? "ri-record-circle-fill recording" : "ri-record-circle-line");
-  icon.style.color = on ? "#ef4444" : "";
+  icon.style.color = on ? "var(--netflix-red)" : "";
   showToast(on ? "Recording started" : "Recording stopped");
 }
 function showChannelInfo() {
@@ -4463,10 +4463,21 @@ function closeInfoModal() {
 /* ==========================================================================
    ACCOUNT STATE (prototype — all localStorage, no backend)
    ========================================================================== */
+const SMART_AVATARS = [
+  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=200&auto=format&fit=crop&q=80"
+];
+
 const AVATAR_PRESETS = ["🎬", "🍿", "🎭", "🚀", "🦸", "👑", "🐱", "🐺", "🌙", "🔥", "🎸", "🎮"];
 
 const DEFAULT_PROFILE = {
-  name: "SunPlex User", email: "user@sunplex.tv", avatar: "🎬", memberSince: "2024"
+  name: "SunPlex VIP",
+  email: "vip@sunplex.tv",
+  avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80",
+  memberSince: "2024"
 };
 const DEFAULT_PLAN = { name: "Premium 4K", price: "$14.99", renews: "Nov 15, 2026", card: "Visa •••• 4242", maxStreams: 4 };
 const DEFAULT_PREFS = {
@@ -4485,7 +4496,17 @@ function lsGet(key, fallback) {
 }
 function lsSet(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 
-function getProfile() { return { ...DEFAULT_PROFILE, ...lsGet('sunplex_profile', {}) }; }
+function getProfile() {
+  const saved = lsGet('sunplex_profile', {});
+  const p = { ...DEFAULT_PROFILE, ...saved };
+  if (!p.avatar || p.avatar === "🎬") {
+    p.avatar = DEFAULT_PROFILE.avatar;
+    if (p.name === "SunPlex User") p.name = DEFAULT_PROFILE.name;
+    if (p.email === "user@sunplex.tv") p.email = DEFAULT_PROFILE.email;
+    setProfile(p);
+  }
+  return p;
+}
 function setProfile(p) { lsSet('sunplex_profile', p); }
 function getPlan() { return { ...DEFAULT_PLAN, ...lsGet('sunplex_plan', {}) }; }
 function setPlan(p) { lsSet('sunplex_plan', p); }
@@ -4620,15 +4641,23 @@ function paintAvatarInto(el, avatar) {
 
 function pickAvatarPreset() {
   openInfoModal({
-    title: "Change profile picture",
-    body: "Pick an emoji preset, upload an image from your device, or paste an image URL.",
+    title: "Change Profile Avatar",
+    body: "Choose from smart avatars, upload your photo, or pick an emoji preset.",
     actions: [
-      { label: "Upload image", onClick: triggerAvatarUpload, closeAfter: true },
-      { label: "Paste image URL", onClick: setAvatarByUrl, closeAfter: true },
-      { label: "Next emoji", onClick: cycleEmojiAvatar, closeAfter: true },
+      { label: "Next Smart Avatar", onClick: cycleSmartAvatar, closeAfter: true },
+      { label: "Upload Image", onClick: triggerAvatarUpload, closeAfter: true },
+      { label: "Paste Image URL", onClick: setAvatarByUrl, closeAfter: true },
+      { label: "Emoji Preset", onClick: cycleEmojiAvatar, closeAfter: true },
       { label: "Cancel" }
     ]
   });
+}
+
+function cycleSmartAvatar() {
+  const p = getProfile();
+  const idx = SMART_AVATARS.indexOf(p.avatar);
+  const next = SMART_AVATARS[(idx + 1) % SMART_AVATARS.length];
+  applyAvatar(next);
 }
 
 function triggerAvatarUpload() {

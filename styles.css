@@ -18,7 +18,7 @@
   --accent-gold-glow: rgba(252, 83, 5, 0.45);
   --accent-purple: #8B5CF6;
   --accent-cyan: #06B6D4;
-  --accent-rose: #F43F5E;
+  --accent-rose: #E50914;
   --accent-emerald: #10B981;
 
   --text-main: #FFFFFF;
@@ -312,7 +312,7 @@ body.app-mode-active::-webkit-scrollbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--accent-purple), var(--netflix-red));
+  background: #ee5405;
   transition: transform 0.2s, border-color 0.2s;
 }
 
@@ -502,6 +502,16 @@ body.app-mode-active::-webkit-scrollbar {
 .user-avatar.has-image,
 .profile-chip-avatar.has-image {
   background: transparent !important;
+}
+
+.profile-avatar.has-image {
+  border: 2.5px solid #ee5405 !important;
+  box-shadow: 0 0 16px rgba(238, 84, 5, 0.45) !important;
+}
+
+.user-avatar.has-image {
+  border: 1.5px solid #ee5405 !important;
+  box-shadow: 0 0 10px rgba(238, 84, 5, 0.4) !important;
 }
 
 .profile-avatar img,
@@ -1544,12 +1554,12 @@ body.app-mode-active::-webkit-scrollbar {
 }
 
 .drawer-item-danger {
-  color: var(--accent-rose, #ef4444) !important;
+  color: var(--netflix-red) !important;
   margin-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
-.drawer-item-danger i { color: var(--accent-rose, #ef4444); }
-.drawer-item-danger:hover { background: rgba(239, 68, 68, 0.12) !important; }
+.drawer-item-danger i { color: var(--netflix-red); }
+.drawer-item-danger:hover { background: rgba(229, 9, 20, 0.12) !important; }
 
 .drawer-item {
   display: flex;
@@ -1655,7 +1665,7 @@ body.app-mode-active::-webkit-scrollbar {
   min-width: 18px;
   height: 18px;
   padding: 0 5px;
-  background: linear-gradient(135deg, #EF4444, #DC2626);
+  background: var(--netflix-red);
   color: #FFFFFF;
   font-size: 10px;
   font-weight: 800;
@@ -1791,7 +1801,7 @@ body.app-mode-active::-webkit-scrollbar {
 }
 
 .notif-clear-text-btn:hover {
-  color: #EF4444;
+  color: var(--netflix-red);
 }
 
 .notification-list {
@@ -3205,14 +3215,14 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-purple), var(--netflix-red));
+  background: #ee5405;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 32px;
   cursor: pointer;
   flex: none;
-  box-shadow: 0 10px 24px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 10px 24px rgba(238, 84, 5, 0.35);
   transition: transform 0.2s;
 }
 
@@ -3252,6 +3262,60 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 }
 
 .profile-dim { color: var(--text-muted); }
+
+/* Smart Profile Badges & Status */
+.profile-status-dot {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2.5px solid var(--bg-dark-900);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+  z-index: 2;
+}
+.profile-status-dot.mini {
+  width: 11px;
+  height: 11px;
+  bottom: 1px;
+  right: 1px;
+  border-width: 2px;
+}
+
+.smart-vip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ee5405, #ff7a30);
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(238, 84, 5, 0.45);
+}
+.smart-vip-badge.mini {
+  font-size: 9px;
+  padding: 1px 6px;
+  box-shadow: none;
+}
+
+.smart-pro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
 
 /* Profiles row */
 .profiles-row {
@@ -3655,7 +3719,7 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 .tv-code-error {
   min-height: 16px;
   font-size: 12px;
-  color: var(--accent-rose, #e5455e);
+  color: var(--netflix-red);
 }
 
 .tv-code-success-check {
@@ -3789,7 +3853,7 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 .circle-action-btn:active { transform: translateY(0); }
 
 .circle-action-btn .recording {
-  color: #ef4444 !important;
+  color: var(--netflix-red) !important;
   animation: recordPulse 1.4s ease-in-out infinite;
 }
 @keyframes recordPulse {
@@ -4629,7 +4693,8 @@ body.login-mode .main-view-area { padding-bottom: 0 !important; }
 
 .storage-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--netflix-red));
+  background: var(--accent-gold);
+  box-shadow: 0 0 10px var(--accent-gold-glow);
   border-radius: 10px;
 }
 
