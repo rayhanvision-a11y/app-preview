@@ -1,5 +1,5 @@
 // SunPlex Service Worker for PWA Standalone Mode
-const CACHE_NAME = 'sunplex-pwa-v11';
+const CACHE_NAME = 'sunplex-pwa-v12';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

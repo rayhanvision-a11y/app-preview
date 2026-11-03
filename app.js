@@ -5099,7 +5099,7 @@ let DOWNLOADS_DATA = [
     quality: "1080p Full HD",
     size: "1.8 GB",
     date: "Aug 28, 2026",
-    poster: "https://image.tmdb.org/t/p/w500/7gKI9hpEMcZUwYeCuQmHJAZURfn.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/7gKI9hpEMcZUQpNgKrkDzJpbnNS.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   },
   {
