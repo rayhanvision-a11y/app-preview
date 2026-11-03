@@ -5079,7 +5079,7 @@ let DOWNLOADS_DATA = [
     quality: "1080p Full HD",
     size: "2.4 GB",
     date: "Sep 04, 2026",
-    poster: "https://upload.wikimedia.org/wikipedia/en/b/b4/Spider-Man-_Across_the_Spider-Verse_poster.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   },
   {
@@ -5089,7 +5089,7 @@ let DOWNLOADS_DATA = [
     quality: "1080p Ultra HD",
     size: "3.1 GB",
     date: "Sep 05, 2026",
-    poster: "https://upload.wikimedia.org/wikipedia/en/5/52/Dune_Part_Two_poster.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   },
   {
@@ -5099,7 +5099,7 @@ let DOWNLOADS_DATA = [
     quality: "1080p Full HD",
     size: "1.8 GB",
     date: "Aug 28, 2026",
-    poster: "https://upload.wikimedia.org/wikipedia/en/7/7b/Extraction_2_poster.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/7gKI9hpEMcZUwYeCuQmHJAZURfn.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   },
   {
@@ -5109,7 +5109,7 @@ let DOWNLOADS_DATA = [
     quality: "720p HD",
     size: "1.4 GB",
     date: "Aug 15, 2026",
-    poster: "https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/jFt1gS4BGHlK8xt76Y81Alp4dbt.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   }
 ];
@@ -5139,7 +5139,7 @@ function renderDownloadsList() {
     const card = document.createElement("div");
     card.className = "download-item-card";
     card.innerHTML = `
-      <img src="${item.poster}" alt="${item.title}" class="download-poster" loading="lazy">
+      <img src="${item.poster}" alt="${item.title}" class="download-poster" loading="lazy" onerror="this.onerror=null; this.src=FALLBACK_POSTER;">
       <div class="download-item-info">
         <div class="download-item-title">${item.title}</div>
         <div class="download-item-subtitle">${item.subTitle}</div>
@@ -5177,7 +5177,7 @@ let CONTINUE_WATCHING_DATA = [
     subTitle: "Across the Spider-Verse",
     progress: 65,
     timeLeft: "48 min remaining",
-    poster: "https://upload.wikimedia.org/wikipedia/en/b/b4/Spider-Man-_Across_the_Spider-Verse_poster.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   },
   {
@@ -5186,7 +5186,7 @@ let CONTINUE_WATCHING_DATA = [
     subTitle: "S6:E1 • Demon 79",
     progress: 30,
     timeLeft: "35 min remaining",
-    poster: "https://upload.wikimedia.org/wikipedia/en/2/22/BlackMirrorTitleCard.png",
+    poster: "https://image.tmdb.org/t/p/w500/7Rum0ePnV1ptJYZP4P6fV20sXn6.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   },
   {
@@ -5195,7 +5195,7 @@ let CONTINUE_WATCHING_DATA = [
     subTitle: "Hindi Action Blockbuster",
     progress: 82,
     timeLeft: "25 min remaining",
-    poster: "https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg",
+    poster: "https://image.tmdb.org/t/p/w500/jFt1gS4BGHlK8xt76Y81Alp4dbt.jpg",
     streamUrl: "https://stream.sunplex.net/Movies/Hindi/2026/A/Alpha/Alpha.2026.1080p.x264.AAC.BTs.VTL.mp4/index.m3u8"
   }
 ];
@@ -5218,7 +5218,7 @@ function renderContinueWatchingCarousel() {
     card.style.aspectRatio = "16/9";
     card.onclick = () => playStream(item.streamUrl, item.title);
     card.innerHTML = `
-      <img src="${item.poster}" alt="${item.title}" class="poster-img" loading="lazy">
+      <img src="${item.poster}" alt="${item.title}" class="poster-img" loading="lazy" onerror="this.onerror=null; this.src=FALLBACK_POSTER;">
       <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.9), transparent 60%); display:flex; flex-direction:column; justify-content:flex-end; padding:10px;">
         <div style="font-size:13px; font-weight:700; color:#fff;">${item.title}</div>
         <div style="font-size:11px; color:#aaa; margin-bottom:6px;">${item.subTitle} • ${item.timeLeft}</div>
